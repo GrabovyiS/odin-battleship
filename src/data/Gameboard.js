@@ -1,7 +1,6 @@
 const BOARD_SIZE = 10;
-const MAX_SHIP_LENGTH = 4;
 
-function Gameboard() {
+const Gameboard = () => {
   const gameboard = {};
 
   gameboard.board = [];
@@ -11,6 +10,13 @@ function Gameboard() {
       gameboard.board[i].push(null);
     }
   }
+
+  gameboard.hitsBoard = [];
+  for (let i = 0; i < gameboard.board.length; i++) {
+    gameboard.hitsBoard.push(gameboard.board[i].slice());
+  }
+
+  gameboard.shipsInBattle = [];
 
   gameboard.placeShip = function (ship, startingCoords, direction) {
     if (
@@ -93,6 +99,8 @@ function Gameboard() {
       }
     }
 
+    this.shipsInBattle.push(ship);
+
     // Reset the coords after moving through
     coords = [startingCoords[0], startingCoords[1]];
 
@@ -109,10 +117,30 @@ function Gameboard() {
   };
 
   gameboard.receiveAttack = function (coords) {
-    this.board[coords[0]][coords[1]] = 'missed';
+    if (this.hitsBoard[coords[0]][coords[1]] !== null) {
+      return new Error('This square has already been hit');
+    } else if (
+      typeof this.board[coords[0]][coords[1]] === 'object' &&
+      this.board[coords[0]][coords[1]] !== null
+    ) {
+      this.board[coords[0]][coords[1]].hit();
+      this.hitsBoard[coords[0]][coords[1]] = 'hit';
+    } else if (this.board[coords[0]][coords[1]] === null) {
+      this.hitsBoard[coords[0]][coords[1]] = 'missed';
+    }
+  };
+
+  gameboard.allSunk = function () {
+    for (const ship of this.shipsInBattle) {
+      if (!ship.isSunk()) {
+        return false;
+      }
+    }
+
+    return true;
   };
 
   return gameboard;
-}
+};
 
 export default Gameboard;
