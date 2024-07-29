@@ -18,6 +18,17 @@ const Gameboard = () => {
 
   gameboard.shipsInBattle = [];
 
+  gameboard.resetBoard = function () {
+    this.shipsInBattle = [];
+
+    for (let i = 0; i < BOARD_SIZE; i++) {
+      for (let j = 0; j < BOARD_SIZE; j++) {
+        gameboard.board[i][j] = null;
+        gameboard.hitsBoard[i][j] = null;
+      }
+    }
+  };
+
   gameboard.placeShip = function (ship, startingCoords, direction) {
     if (
       startingCoords[0] > this.board.length - 1 ||
