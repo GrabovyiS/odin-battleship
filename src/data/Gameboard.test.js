@@ -87,13 +87,22 @@ describe('Receiving attack', () => {
     expect(gameboard.hitsBoard[0][0]).toBe('missed');
   });
 
-  test('Record a ship hit', () => {
+  test('Record a hit on a ship', () => {
     const gameboard = Gameboard();
     const ship = Ship(3);
     gameboard.placeShip(ship, [0, 0], 'ttb');
 
     gameboard.receiveAttack([0, 0]);
     expect(ship.hits).toBe(1);
+  });
+
+  test('Record a hit on the hits board', () => {
+    const gameboard = Gameboard();
+    const ship = Ship(3);
+    gameboard.placeShip(ship, [0, 0], 'ttb');
+
+    gameboard.receiveAttack([0, 0]);
+    expect(gameboard.hitsBoard[0][0]).toBe('hit');
   });
 
   test('Returns an error when trying to attack already hit square', () => {
