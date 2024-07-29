@@ -154,4 +154,5 @@ const Gameboard = () => {
   return gameboard;
 };
 
+export { BOARD_SIZE };
 export default Gameboard;
