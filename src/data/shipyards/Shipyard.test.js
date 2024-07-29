@@ -34,8 +34,6 @@ const optionsUnsorted = [
 test('Returns array of correct ships with sorted input', () => {
   let shipyard = Shipyard(optionsSorted);
 
-  console.log(shipyard);
-
   let expectedShipyard = [];
   expectedShipyard.push(Ship(1));
   expectedShipyard.push(Ship(2));
@@ -46,8 +44,6 @@ test('Returns array of correct ships with sorted input', () => {
 
 test('Returns sorted array of correct ships with unsorted input', () => {
   let shipyard = Shipyard(optionsUnsorted);
-
-  console.log(shipyard);
 
   let expectedShipyard = [];
   expectedShipyard.push(Ship(1));

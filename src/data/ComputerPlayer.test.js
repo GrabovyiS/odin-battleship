@@ -68,8 +68,6 @@ test('Tries one of adjacent squares after hit', () => {
     boardAfterFirstHit.push(opponent.gameboard.hitsBoard[i].slice());
   }
 
-  console.table(boardAfterFirstHit);
-
   computerPlayer.makeTurn();
   let newlyHitSquareCoords = null;
 
@@ -83,11 +81,6 @@ test('Tries one of adjacent squares after hit', () => {
       }
     }
   }
-
-  console.table(opponent.gameboard.hitsBoard);
-
-  console.log('new hit:', newlyHitSquareCoords);
-  console.log('old hit:', hitSquareCoords);
 
   expect(areAdjacent(hitSquareCoords, newlyHitSquareCoords)).toBe(true);
 });

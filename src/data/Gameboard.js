@@ -59,7 +59,6 @@ const Gameboard = () => {
         typeof this.board[coords[0]][coords[1]] === 'object' &&
         this.board[coords[0]][coords[1]] !== null
       ) {
-        console.log('found collision', coords);
         return new Error("Can't fit a ship here because of another ship");
       }
 
@@ -75,7 +74,6 @@ const Gameboard = () => {
 
     // Go through each square where the new ship is supposed to be
     for (let i = 0; i < ship.length; i++) {
-      console.log('new cell', coords);
       for (let j = coords[0] - 1; j <= coords[0] + 1; j++) {
         for (let k = coords[1] - 1; k <= coords[1] + 1; k++) {
           if (j === coords[0] && k === coords[1]) {
@@ -95,7 +93,6 @@ const Gameboard = () => {
             typeof this.board[j][k] === 'object' &&
             this.board[j][k] !== null
           ) {
-            console.log('found adjacent ship at', j, k);
             return new Error(
               "Ships can't be immediately adjacent to each other",
             );
