@@ -1,5 +1,6 @@
 import Player from './Player';
 import getRandomCoords from '../helpers/getRandomCoords';
+import getUnhitSquareCoords from '../helpers/getUnhitSquareCoords';
 import squareIsShip from '../helpers/squareIsShip';
 import squareAlreadyHit from '../helpers/squareAlreadyHit';
 import coordsOutOfBoardBounds from '../helpers/coordsOutOfBoardBounds';
@@ -18,13 +19,7 @@ const ComputerPlayer = (opponent) => {
     // Blank slate
     if (!this.lastHitShipCoords) {
       // Get a square that hasn't been hit before
-      while (true) {
-        hitCoords = getRandomCoords();
-
-        if (!squareAlreadyHit(this.opponent.gameboard, hitCoords)) {
-          break;
-        }
-      }
+      hitCoords = getUnhitSquareCoords(this.opponent.gameboard);
 
       this.opponent.gameboard.receiveAttack(hitCoords);
 
@@ -54,24 +49,10 @@ const ComputerPlayer = (opponent) => {
       );
 
       // Find a cross-adjacent square to hit
-      while (true) {
-        const index = Math.floor(
-          Math.random() * topBottomAdjacentCoords.length,
-        );
-
-        if (coordsOutOfBoardBounds(topBottomAdjacentCoords[index])) {
-          continue;
-        }
-
-        hitCoords = [
-          topBottomAdjacentCoords[index][0],
-          topBottomAdjacentCoords[index][1],
-        ];
-
-        if (!squareAlreadyHit(this.opponent.gameboard, hitCoords)) {
-          break;
-        }
-      }
+      hitCoords = getUnhitSquareCoords(
+        this.opponent.gameboard,
+        topBottomAdjacentCoords,
+      );
 
       this.opponent.gameboard.receiveAttack(hitCoords);
 
@@ -95,19 +76,10 @@ const ComputerPlayer = (opponent) => {
         this.lastHitShipCoords,
       );
 
-      while (true) {
-        const index = Math.floor(Math.random() * newPossibleHitCoords.length);
-
-        // getNewPossibleHitCoordsAfterMultipleHits already checks for out of bounds
-        hitCoords = [
-          newPossibleHitCoords[index][0],
-          newPossibleHitCoords[index][1],
-        ];
-
-        if (!squareAlreadyHit(this.opponent.gameboard, hitCoords)) {
-          break;
-        }
-      }
+      hitCoords = getUnhitSquareCoords(
+        this.opponent.gameboard,
+        newPossibleHitCoords,
+      );
 
       this.opponent.gameboard.receiveAttack(hitCoords);
 
