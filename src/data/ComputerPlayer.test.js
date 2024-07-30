@@ -7,6 +7,8 @@ import squareAlreadyHit from '../helpers/squareAlreadyHit';
 import copyBoard from '../helpers/copyBoard';
 import getChangedSquareCoords from '../helpers/getChangedSquareCoords';
 import shootAndGetNextHit from '../helpers/shootAndGetNextHit';
+import getNewPossibleHitCoordsAfterMultipleHits from '../helpers/getNewPossibleHitCoordsAfterMultipleHits';
+import areEqualCoords from '../helpers/areEqualCoords';
 
 test('Shoots', () => {
   const opponent = Player();
@@ -62,106 +64,47 @@ test('Tries one of adjacent squares after hit', () => {
   );
 });
 
-// test('Hits in a row when hit the same ship twice', () => {
-//   const opponent = Player();
-//   const computerPlayer = ComputerPlayer(opponent);
+test('Hits in a row when hit the same ship twice', () => {
+  const opponent = Player();
+  const computerPlayer = ComputerPlayer(opponent);
 
-//   const longShip = Ship(4);
+  const longShip = Ship(4);
 
-//   opponent.gameboard.placeShip(longShip, [3, 3], 'ttb');
-//   opponent.gameboard.placeShip(longShip, [3, 5], 'ttb');
-//   opponent.gameboard.placeShip(longShip, [3, 7], 'ttb');
+  opponent.gameboard.placeShip(longShip, [0, 0], 'ltr');
+  opponent.gameboard.placeShip(longShip, [3, 5], 'ttb');
 
-//   let hit = false;
-//   let hitSquareCoords = null;
-//   while (hit === false) {
-//     computerPlayer.makeTurn();
+  const opponentHitsBoard = computerPlayer.opponent.gameboard.hitsBoard;
 
-//     for (let i = 0; i < opponent.gameboard.hitsBoard.length; i++) {
-//       for (let j = 0; j < opponent.gameboard.hitsBoard.length; j++) {
-//         const square = opponent.gameboard.hitsBoard[i][j];
-//         if (square === 'hit') {
-//           hit = true;
-//           hitSquareCoords = [i, j];
-//         }
-//       }
-//     }
-//   }
+  const firstHitSquareCoords = shootAndGetNextHit(computerPlayer);
+  console.log('After first hit:');
+  console.table(opponentHitsBoard);
+  const secondHitSquareCoords = shootAndGetNextHit(computerPlayer);
+  console.log('After second hit:');
+  console.table(opponentHitsBoard);
 
-//   const boardAfterFirstHit = [];
-//   for (let i = 0; i < opponent.gameboard.board.length; i++) {
-//     boardAfterFirstHit.push(opponent.gameboard.hitsBoard[i].slice());
-//   }
+  const hitCoords = [firstHitSquareCoords, secondHitSquareCoords];
 
-//   let newlyHitSquareCoords = null;
-//   let newlyHitSquare = null;
-//   while (newlyHitSquare !== 'hit') {
-//     computerPlayer.makeTurn();
+  const newPossibleHitCoords =
+    getNewPossibleHitCoordsAfterMultipleHits(hitCoords);
 
-//     for (let i = 0; i < opponent.gameboard.hitsBoard.length; i++) {
-//       for (let j = 0; j < opponent.gameboard.hitsBoard.length; j++) {
-//         const newSquare = opponent.gameboard.hitsBoard[i][j];
-//         const oldSquare = boardAfterFirstHit[i][j];
+  const boardAfterSecondHit = copyBoard(opponentHitsBoard);
 
-//         if (newSquare !== oldSquare) {
-//           newlyHitSquareCoords = [i, j];
-//           newlyHitSquare = newSquare;
-//         }
-//       }
-//     }
-//   }
+  computerPlayer.makeTurn();
 
-//   console.log('after second hit:');
-//   console.table(opponent.gameboard.hitsBoard);
+  const afterSecondHitAttackCoords = getChangedSquareCoords(
+    boardAfterSecondHit,
+    opponentHitsBoard,
+  );
 
-//   const hitCoords = [hitSquareCoords, newlyHitSquareCoords];
+  console.table(opponentHitsBoard);
+  console.log({ newPossibleHitCoords });
+  console.log({ afterSecondHitAttackCoords });
+  // doesnt work yet and it is fine, check if aftersecondhitattackcoords are in the new possible coords
+  // get a helper function for checking coords equality
 
-//   let newPossibleHitCoords = [];
-
-//   if (hitCoords[0][0] - hitCoords[1][0] === 0) {
-//     // direction is X
-//     // figure out the most left and most right hit
-//     hitCoords.sort((coords1, coords2) => (coords1[0] < coords2[0] ? -1 : 1));
-//     const mostLeft = hitCoords[0];
-//     const mostRight = hitCoords[0];
-
-//     const lefter = [mostLeft[0], mostLeft[1] - 1];
-//     const righter = [mostLeft[0], mostLeft[1] + 1];
-
-//     newPossibleHitCoords.push(lefter, righter);
-//   } else if (hitCoords[0][1] - hitCoords[1][1] === 0) {
-//     // direction is y
-//     hitCoords.sort((coords1, coords2) => (coords1[1] < coords2[1] ? -1 : 1));
-//     const mostTop = hitCoords[0];
-//     const mostBottom = hitCoords[0];
-
-//     const topper = [mostTop[0] - 1, mostTop[1]];
-//     const bottomer = [mostBottom[0] + 1, mostBottom[1]];
-
-//     newPossibleHitCoords.push(topper, bottomer);
-//   }
-
-//   console.log('possible coords to hit after second hit', newPossibleHitCoords);
-
-//   let thirdHitSquare = null;
-//   let thirdHitSquareCoords = null;
-//   while (newlyHitSquare !== 'hit') {
-//     computerPlayer.makeTurn();
-
-//     for (let i = 0; i < opponent.gameboard.hitsBoard.length; i++) {
-//       for (let j = 0; j < opponent.gameboard.hitsBoard.length; j++) {
-//         const newSquare = opponent.gameboard.hitsBoard[i][j];
-//         const oldSquare = boardAfterFirstHit[i][j];
-
-//         if (newSquare !== oldSquare) {
-//           thirdHitSquareCoords = [i, j];
-//           thirdHitSquare = newSquare;
-//         }
-//       }
-//     }
-//   }
-
-//   // console.table(opponent.gameboard.hitsBoard);
-
-//   expect(areAdjacent(hitSquareCoords, newlyHitSquareCoords)).toBe(true);
-// });
+  expect(
+    newPossibleHitCoords.some((coords) =>
+      areEqualCoords(coords, afterSecondHitAttackCoords),
+    ),
+  ).toBe(true);
+});
