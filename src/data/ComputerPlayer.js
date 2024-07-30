@@ -1,8 +1,9 @@
 import Player from './Player';
 import getRandomCoords from '../helpers/getRandomCoords';
-import forEachAdjacent from '../helpers/forEachAdjacent';
 import squareIsShip from '../helpers/squareIsShip';
 import squareAlreadyHit from '../helpers/squareAlreadyHit';
+import coordsOutOfBoardBounds from '../helpers/coordsOutOfBoardBounds';
+import getNewPossibleHitCoordsAfterMultipleHits from '../helpers/getNewPossibleHitCoordsAfterMultipleHits';
 
 const ComputerPlayer = (opponent) => {
   const computerPlayer = Player();
@@ -14,49 +15,51 @@ const ComputerPlayer = (opponent) => {
   computerPlayer.makeTurn = function () {
     let hitCoords;
 
+    // Blank slate
     if (!this.lastHitShipCoords) {
+      // Get a square that hasn't been hit before
       while (true) {
         hitCoords = getRandomCoords();
 
-        // if found a ship on a square that hasn't been hit before
-        if (
-          this.opponent.gameboard.board[hitCoords[0]][hitCoords[1]] !== null &&
-          typeof this.opponent.gameboard.board[hitCoords[0]][hitCoords[1]] ===
-            'object' &&
-          this.opponent.gameboard.hitsBoard[hitCoords[0]][hitCoords[1]] === null
-        ) {
-          this.lastHitShipCoords = [hitCoords[0], hitCoords[1]];
-        }
-
-        // if found a square what hasn't been hit before
-        if (
-          this.opponent.gameboard.hitsBoard[hitCoords[0]][hitCoords[1]] === null
-        ) {
+        if (!squareAlreadyHit(this.opponent.gameboard, hitCoords)) {
           break;
         }
       }
 
-      return this.opponent.gameboard.receiveAttack(hitCoords);
+      this.opponent.gameboard.receiveAttack(hitCoords);
+
+      if (squareIsShip(this.opponent.gameboard, hitCoords)) {
+        if (
+          !this.opponent.gameboard.board[hitCoords[0]][hitCoords[1]].isSunk()
+        ) {
+          this.lastHitShipCoords = [];
+          this.lastHitShipCoords.push([hitCoords[0], hitCoords[1]]);
+        } else {
+          this.lastHitShipCoords = null;
+        }
+      }
+
+      return;
     }
 
-    if (this.lastHitShipCoords) {
-      const lastHit = this.lastHitShipCoords;
+    // If hit a ship once
+    if (this.lastHitShipCoords && this.lastHitShipCoords.length === 1) {
+      const lastHit = this.lastHitShipCoords[0];
       const topBottomAdjacentCoords = [];
-      topBottomAdjacentCoords.push([lastHit[0], lastHit[1] + 1]);
-      topBottomAdjacentCoords.push([lastHit[0] + 1, lastHit[1]]);
-      topBottomAdjacentCoords.push([lastHit[0], lastHit[1] - 1]);
-      topBottomAdjacentCoords.push([lastHit[0] - 1, lastHit[1]]);
+      topBottomAdjacentCoords.push(
+        [lastHit[0], lastHit[1] + 1],
+        [lastHit[0] + 1, lastHit[1]],
+        [lastHit[0], lastHit[1] - 1],
+        [lastHit[0] - 1, lastHit[1]],
+      );
 
+      // Find a cross-adjacent square to hit
       while (true) {
-        const index = Math.floor(Math.random() * 4);
-        const boardSize = this.opponent.gameboard.board.length;
+        const index = Math.floor(
+          Math.random() * topBottomAdjacentCoords.length,
+        );
 
-        if (
-          topBottomAdjacentCoords[index][0] > boardSize - 1 ||
-          topBottomAdjacentCoords[index][0] < 0 ||
-          topBottomAdjacentCoords[index][1] > boardSize - 1 ||
-          topBottomAdjacentCoords[index][1] < 0
-        ) {
+        if (coordsOutOfBoardBounds(topBottomAdjacentCoords[index])) {
           continue;
         }
 
@@ -65,14 +68,58 @@ const ComputerPlayer = (opponent) => {
           topBottomAdjacentCoords[index][1],
         ];
 
-        if (
-          this.opponent.gameboard.hitsBoard[hitCoords[0]][hitCoords[1]] === null
-        ) {
+        if (!squareAlreadyHit(this.opponent.gameboard, hitCoords)) {
           break;
         }
       }
 
-      return this.opponent.gameboard.receiveAttack(hitCoords);
+      this.opponent.gameboard.receiveAttack(hitCoords);
+
+      if (squareIsShip(this.opponent.gameboard, hitCoords)) {
+        if (
+          !this.opponent.gameboard.board[hitCoords[0]][hitCoords[1]].isSunk()
+        ) {
+          this.lastHitShipCoords.push([hitCoords[0], hitCoords[1]]);
+        } else {
+          this.lastHitShipCoords = null;
+        }
+      }
+
+      return;
+    }
+
+    // If hit a ship at least twice in a row
+    if (this.lastHitShipCoords && this.lastHitShipCoords.length > 1) {
+      // Find a square that is in the same row/column
+      const newPossibleHitCoords = getNewPossibleHitCoordsAfterMultipleHits(
+        this.lastHitShipCoords,
+      );
+
+      while (true) {
+        const index = Math.floor(Math.random() * newPossibleHitCoords.length);
+
+        // getNewPossibleHitCoordsAfterMultipleHits already checks for out of bounds
+        hitCoords = [
+          newPossibleHitCoords[index][0],
+          newPossibleHitCoords[index][1],
+        ];
+
+        if (!squareAlreadyHit(this.opponent.gameboard, hitCoords)) {
+          break;
+        }
+      }
+
+      this.opponent.gameboard.receiveAttack(hitCoords);
+
+      if (squareIsShip(this.opponent.gameboard, hitCoords)) {
+        if (
+          !this.opponent.gameboard.board[hitCoords[0]][hitCoords[1]].isSunk()
+        ) {
+          this.lastHitShipCoords.push([hitCoords[0], hitCoords[1]]);
+        } else {
+          this.lastHitShipCoords = null;
+        }
+      }
     }
   };
 
