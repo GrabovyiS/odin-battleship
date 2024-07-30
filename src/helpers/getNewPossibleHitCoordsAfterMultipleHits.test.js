@@ -38,3 +38,28 @@ test('Returns correct coords for ttb ships', () => {
     [3, 0],
   ]);
 });
+
+test('Works with unsorted hits coords', () => {
+  expect(
+    getNewPossibleHitCoordsAfterMultipleHits([
+      [0, 3],
+      [0, 2],
+    ]),
+  ).toEqual([
+    [0, 1],
+    [0, 4],
+  ]);
+});
+
+test('Works with more than 2 hits', () => {
+  expect(
+    getNewPossibleHitCoordsAfterMultipleHits([
+      [0, 3],
+      [0, 2],
+      [0, 1],
+    ]),
+  ).toEqual([
+    [0, 0],
+    [0, 4],
+  ]);
+});

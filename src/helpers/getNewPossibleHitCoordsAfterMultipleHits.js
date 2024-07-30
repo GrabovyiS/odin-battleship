@@ -20,7 +20,8 @@ const getNewPossibleHitCoordsAfterMultipleHits = (hitCoords) => {
   if (hitCoords[0][0] - hitCoords[1][0] === 0) {
     // direction is X
     // figure out the most left and most right hit
-    hitCoords.sort((coords1, coords2) => (coords1[0] < coords2[0] ? -1 : 1));
+    hitCoords.sort((coords1, coords2) => (coords1[1] < coords2[1] ? -1 : 1));
+    console.log('direction is x, sorted hits:', hitCoords);
     const mostLeft = hitCoords[0];
     const mostRight = hitCoords[hitCoords.length - 1];
 
@@ -36,7 +37,8 @@ const getNewPossibleHitCoordsAfterMultipleHits = (hitCoords) => {
     }
   } else if (hitCoords[0][1] - hitCoords[1][1] === 0) {
     // direction is y
-    hitCoords.sort((coords1, coords2) => (coords1[1] < coords2[1] ? -1 : 1));
+    hitCoords.sort((coords1, coords2) => (coords1[0] < coords2[0] ? -1 : 1));
+    console.log('direction is y, sorted hits:', hitCoords);
     const mostTop = hitCoords[0];
     const mostBottom = hitCoords[hitCoords.length - 1];
 
