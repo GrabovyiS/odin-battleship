@@ -1,6 +1,8 @@
 import Player from './Player';
 import getRandomCoords from '../helpers/getRandomCoords';
 import forEachAdjacent from '../helpers/forEachAdjacent';
+import squareIsShip from '../helpers/squareIsShip';
+import squareAlreadyHit from '../helpers/squareAlreadyHit';
 
 const ComputerPlayer = (opponent) => {
   const computerPlayer = Player();
@@ -11,6 +13,31 @@ const ComputerPlayer = (opponent) => {
 
   computerPlayer.makeTurn = function () {
     let hitCoords;
+
+    if (!this.lastHitShipCoords) {
+      while (true) {
+        hitCoords = getRandomCoords();
+
+        // if found a ship on a square that hasn't been hit before
+        if (
+          this.opponent.gameboard.board[hitCoords[0]][hitCoords[1]] !== null &&
+          typeof this.opponent.gameboard.board[hitCoords[0]][hitCoords[1]] ===
+            'object' &&
+          this.opponent.gameboard.hitsBoard[hitCoords[0]][hitCoords[1]] === null
+        ) {
+          this.lastHitShipCoords = [hitCoords[0], hitCoords[1]];
+        }
+
+        // if found a square what hasn't been hit before
+        if (
+          this.opponent.gameboard.hitsBoard[hitCoords[0]][hitCoords[1]] === null
+        ) {
+          break;
+        }
+      }
+
+      return this.opponent.gameboard.receiveAttack(hitCoords);
+    }
 
     if (this.lastHitShipCoords) {
       const lastHit = this.lastHitShipCoords;
@@ -47,29 +74,6 @@ const ComputerPlayer = (opponent) => {
 
       return this.opponent.gameboard.receiveAttack(hitCoords);
     }
-
-    while (true) {
-      hitCoords = getRandomCoords();
-
-      // if found a ship on a square that hasn't been hit before
-      if (
-        this.opponent.gameboard.board[hitCoords[0]][hitCoords[1]] !== null &&
-        typeof this.opponent.gameboard.board[hitCoords[0]][hitCoords[1]] ===
-          'object' &&
-        this.opponent.gameboard.hitsBoard[hitCoords[0]][hitCoords[1]] === null
-      ) {
-        this.lastHitShipCoords = [hitCoords[0], hitCoords[1]];
-      }
-
-      // if found a square what hasn't been hit before
-      if (
-        this.opponent.gameboard.hitsBoard[hitCoords[0]][hitCoords[1]] === null
-      ) {
-        break;
-      }
-    }
-
-    return this.opponent.gameboard.receiveAttack(hitCoords);
   };
 
   return computerPlayer;
