@@ -1,9 +1,6 @@
 import Player from './Player';
-import getRandomCoords from '../helpers/getRandomCoords';
 import getUnhitSquareCoords from '../helpers/getUnhitSquareCoords';
 import squareIsShip from '../helpers/squareIsShip';
-import squareAlreadyHit from '../helpers/squareAlreadyHit';
-import coordsOutOfBoardBounds from '../helpers/coordsOutOfBoardBounds';
 import getNewPossibleHitCoordsAfterMultipleHits from '../helpers/getNewPossibleHitCoordsAfterMultipleHits';
 
 const ComputerPlayer = (opponent) => {
