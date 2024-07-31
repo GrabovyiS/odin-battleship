@@ -1,4 +1,5 @@
 import BOARD_SIZE from './BOARD_SIZE';
+import coordsOutOfBoardBounds from '../helpers/coordsOutOfBoardBounds';
 
 const Gameboard = () => {
   const gameboard = {};
@@ -30,12 +31,7 @@ const Gameboard = () => {
   };
 
   gameboard.placeShip = function (ship, startingCoords, direction) {
-    if (
-      startingCoords[0] > this.board.length - 1 ||
-      startingCoords[0] < 0 ||
-      startingCoords[1] > this.board.length - 1 ||
-      startingCoords[1] < 0
-    ) {
+    if (coordsOutOfBoardBounds(startingCoords)) {
       return new Error('Wrong starting coordinates');
     }
 
@@ -80,12 +76,7 @@ const Gameboard = () => {
             continue;
           }
 
-          if (
-            j > this.board.length - 1 ||
-            j < 0 ||
-            k > this.board.length - 1 ||
-            k < 0
-          ) {
+          if (coordsOutOfBoardBounds([j, k])) {
             continue;
           }
 
