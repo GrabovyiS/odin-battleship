@@ -6,10 +6,14 @@
     <title>Index html template</title>
   </head>
   <body>
-    <h1>Index hello world</h1>
-    <!-- this link is hardcoded, all page files output into dist -->
-    <a href="./about.html">to about page</a>
-    <!-- this will not work  -->
-    <!-- <img src="./placeholder.png" alt="" /> -->
+    <header>
+      <nav>
+        <button id="player-vs-computer">Play vs computer</button>
+      </nav>
+    </header>
+    <div class="boards-container">
+      <div class="player-board-container"></div>
+      <div class="opponent-board-container"></div>
+    </div>
   </body>
 </html>
