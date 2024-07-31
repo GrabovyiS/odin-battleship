@@ -1,11 +1,10 @@
 import BOARD_SIZE from '../../data/BOARD_SIZE';
-import getShipCoords from '../../helpers/getShipCoords';
-import getSquareElement from '../../helpers/getSquareElement';
+import styleSunkShips from '../../helpers/styleSunkShips';
 
 const OpponentBoard = (player, clickSquareCallback) => {
-  const opponentBoard = document.createElement('div');
-  opponentBoard.classList.add('board');
-  opponentBoard.classList.add('opponent-board');
+  const opponentBoardContainer = document.createElement('div');
+  opponentBoardContainer.classList.add('board');
+  opponentBoardContainer.classList.add('opponent-board');
 
   console.log('re-render');
 
@@ -14,7 +13,7 @@ const OpponentBoard = (player, clickSquareCallback) => {
       const square = document.createElement('div');
       square.classList.add(`i_${i}_j:_${j}`);
       square.classList.add('square');
-      opponentBoard.appendChild(square);
+      opponentBoardContainer.appendChild(square);
       square.coords = [i, j];
 
       square.addEventListener('click', clickSquareCallback);
@@ -31,66 +30,9 @@ const OpponentBoard = (player, clickSquareCallback) => {
     }
   }
 
-  const squares = opponentBoard.childNodes;
-  for (const square of squares) {
-    const [i, j] = square.coords;
-    const currentSquareState = player.gameboard.hitsBoard[i][j];
+  styleSunkShips(opponentBoardContainer, player.gameboard);
 
-    if (currentSquareState === 'hit' && player.gameboard.board[i][j].isSunk()) {
-      const shipCoords = getShipCoords(
-        player.gameboard,
-        player.gameboard.board[i][j],
-      );
-
-      if (shipCoords.length === 1) {
-        console.log(shipCoords, square);
-        square.classList.add('killed-bottom-square');
-        square.classList.add('killed-top-square');
-      } else {
-        if (shipCoords[0][0] - shipCoords[1][0] === 0) {
-          // x is the same, direction is ltr
-          shipCoords.sort((coords1, coords2) =>
-            coords1[1] < coords2[1] ? -1 : 1,
-          );
-
-          console.log(shipCoords);
-
-          for (let i = 0; i < shipCoords.length; i++) {
-            let shipCoord = shipCoords[i];
-            const squareElement = getSquareElement(opponentBoard, shipCoord);
-            if (i === 0) {
-              squareElement.classList.add('killed-left-square');
-            }
-            if (i === shipCoords.length - 1) {
-              squareElement.classList.add('killed-right-square');
-            }
-            squareElement.classList.add('killed-ltr-middle-square');
-          }
-        } else if (shipCoords[0][1] - shipCoords[1][1] === 0) {
-          // y is the same, direction is ttb
-          shipCoords.sort((coords1, coords2) =>
-            coords1[0] < coords2[0] ? -1 : 1,
-          );
-
-          for (let i = 0; i < shipCoords.length; i++) {
-            let shipCoord = shipCoords[i];
-            const squareElement = getSquareElement(opponentBoard, shipCoord);
-            if (i === 0) {
-              squareElement.classList.add('killed-top-square');
-            }
-            if (i === shipCoords.length - 1) {
-              squareElement.classList.add('killed-bottom-square');
-            }
-            squareElement.classList.add('killed-ttb-middle-square');
-          }
-        }
-      }
-
-      console.log(shipCoords);
-    }
-  }
-
-  return opponentBoard;
+  return opponentBoardContainer;
 };
 
 export default OpponentBoard;

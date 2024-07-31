@@ -53,36 +53,36 @@ body > header {
   }
 }
 
-.killed-top-square {
+.sunk-top-square {
   border-top: 3px solid red;
   border-left: 3px solid red;
   border-right: 3px solid red;
 }
 
-.killed-right-square {
+.sunk-right-square {
   border-top: 3px solid red;
   border-bottom: 3px solid red;
   border-right: 3px solid red;
 }
 
-.killed-bottom-square {
+.sunk-bottom-square {
   border-bottom: 3px solid red;
   border-right: 3px solid red;
   border-left: 3px solid red;
 }
 
-.killed-left-square {
+.sunk-left-square {
   border-top: 3px solid red;
   border-bottom: 3px solid red;
   border-left: 3px solid red;
 }
 
-.killed-ltr-middle-square {
+.sunk-ltr-middle-square {
   border-top: 3px solid red;
   border-bottom: 3px solid red;
 }
 
-.killed-ttb-middle-square {
+.sunk-ttb-middle-square {
   border-left: 3px solid red;
   border-right: 3px solid red;
 }
