@@ -1,4 +1,4 @@
-const BOARD_SIZE = 10;
+import BOARD_SIZE from './BOARD_SIZE';
 
 const Gameboard = () => {
   const gameboard = {};

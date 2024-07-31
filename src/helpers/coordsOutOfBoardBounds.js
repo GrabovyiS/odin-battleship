@@ -1,4 +1,4 @@
-import { BOARD_SIZE } from '../data/Gameboard';
+import BOARD_SIZE from '../data/BOARD_SIZE';
 
 const coordsOutOfBoardBounds = (coords) => {
   if (!Array.isArray(coords)) {

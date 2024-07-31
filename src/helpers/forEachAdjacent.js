@@ -1,4 +1,4 @@
-import { BOARD_SIZE } from '../data/Gameboard';
+import BOARD_SIZE from '../data/BOARD_SIZE';
 
 const forEachAdjacent = (array, coords, callback) => {
   for (let i = coords[0] - 1; i <= coords[0] + 1; i++) {

@@ -1,5 +1,5 @@
 import getRandomCoords from './getRandomCoords';
-import { BOARD_SIZE } from '../data/Gameboard';
+import BOARD_SIZE from '../data/BOARD_SIZE';
 
 const randomCoords = [];
 
