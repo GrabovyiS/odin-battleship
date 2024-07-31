@@ -1,4 +1,8 @@
 const getShipCoords = (gameboard, ship) => {
+  if (!Object.prototype.hasOwnProperty.call(gameboard, 'board')) {
+    return new Error('Must provide a proper gameboard to get coordinates');
+  }
+
   const shipCoords = [];
 
   for (let i = 0; i < gameboard.board.length; i++) {

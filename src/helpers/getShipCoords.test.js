@@ -2,6 +2,13 @@ import getShipCoords from './getShipCoords';
 import Gameboard from '../data/Gameboard';
 import Ship from '../data/Ship';
 
+test('Returns an error when provided gameboard is not a gameboard', () => {
+  const gameboard = [];
+  const ship = Ship(4);
+
+  expect(getShipCoords(gameboard, ship)).toBeInstanceOf(Error);
+});
+
 test('Returns null when ship is not present on the gameboard', () => {
   const gameboard = Gameboard();
   const notOnBoardShip = Ship(4);
