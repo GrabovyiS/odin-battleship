@@ -24,8 +24,9 @@ const forEachShipCoord = (
           ltrCallback(shipCoord, 'first');
         } else if (i === shipCoords.length - 1) {
           ltrCallback(shipCoord, 'last');
+        } else {
+          ltrCallback(shipCoord, i);
         }
-        ltrCallback(shipCoord, i);
       }
     } else if (shipCoords[0][1] - shipCoords[1][1] === 0) {
       // y is the same, direction is ttb
