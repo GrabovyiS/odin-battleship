@@ -10,6 +10,10 @@ const getShipCoords = (gameboard, ship) => {
     }
   }
 
+  if (shipCoords.length === 0) {
+    return null;
+  }
+
   return shipCoords;
 };
 

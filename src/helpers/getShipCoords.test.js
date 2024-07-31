@@ -2,6 +2,13 @@ import getShipCoords from './getShipCoords';
 import Gameboard from '../data/Gameboard';
 import Ship from '../data/Ship';
 
+test('Returns null when ship is not present on the gameboard', () => {
+  const gameboard = Gameboard();
+  const notOnBoardShip = Ship(4);
+
+  expect(getShipCoords(gameboard, notOnBoardShip)).toBeNull();
+});
+
 test('Gets correct coordinates', () => {
   const gameboard = Gameboard();
   const ship1 = Ship(4);
