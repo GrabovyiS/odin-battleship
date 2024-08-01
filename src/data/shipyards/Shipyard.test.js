@@ -36,11 +36,8 @@ test('Returns array of correct ships with sorted input', () => {
 
   let expectedShipyard = [];
   const ship1 = Ship(1);
-  ship1.direction = 'ltr';
   const ship2 = Ship(2);
-  ship2.direction = 'ltr';
   const ship3 = Ship(3);
-  ship3.direction = 'ltr';
   expectedShipyard.push(ship1);
   expectedShipyard.push(ship2);
   expectedShipyard.push(ship3);
@@ -53,11 +50,8 @@ test('Returns sorted array of correct ships with unsorted input', () => {
 
   let expectedShipyard = [];
   const ship1 = Ship(1);
-  ship1.direction = 'ltr';
   const ship2 = Ship(2);
-  ship2.direction = 'ltr';
   const ship3 = Ship(3);
-  ship3.direction = 'ltr';
   expectedShipyard.push(ship1);
   expectedShipyard.push(ship2);
   expectedShipyard.push(ship3);

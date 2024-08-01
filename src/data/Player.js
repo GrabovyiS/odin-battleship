@@ -1,15 +1,15 @@
 import Gameboard from './Gameboard';
-import shipyardBig from './shipyards/shipyardBig';
+import shipyardBigOption from './shipyards/shipyardBigOption';
 import Shipyard from './shipyards/Shipyard';
 
 const Player = () => {
   const player = {};
 
   player.gameboard = Gameboard();
-  player.shipyard = Shipyard(shipyardBig);
+  player.shipyard = Shipyard(shipyardBigOption);
 
   player.resetShipyard = function () {
-    player.shipyard = Shipyard(shipyardBig);
+    player.shipyard = Shipyard(shipyardBigOption);
   };
 
   return player;
