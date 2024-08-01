@@ -31,9 +31,9 @@ const startPlayerVsComputer = () => {
   };
 
   const renderer = GameRenderer(player, computerPlayer, onClickSquare);
-  renderer.setUpDropEventListener();
   renderer.renderOpponentBoard();
   renderer.renderPlayerBoard();
+  renderer.setUpDropEventListener();
 
   renderer.renderShipyard();
 

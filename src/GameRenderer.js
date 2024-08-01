@@ -38,7 +38,31 @@ const GameRenderer = (player, opponent, clickSquareCallback) => {
     shipyardContainer.appendChild(playerShipyard);
   };
 
-  renderer.setUpDropEventListener = function () {};
+  renderer.setUpDropEventListener = function () {
+    window.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      if (!e.target.closest('.player-board-container')) {
+        // console.log('outside');
+      }
+    });
+
+    window.addEventListener('drop', (e) => {
+      e.preventDefault();
+      if (!e.target.closest('.player-board-container')) {
+        document.querySelectorAll('.dragging').forEach((element) => {
+          element.classList.remove('dragging');
+        });
+      }
+      console.log(e.target);
+    });
+
+    document
+      .querySelector('.board.player-board')
+      .addEventListener('shipTakenFromShipyard', (e) => {
+        console.table(player.gameboard.board);
+        renderer.renderShipyard();
+      });
+  };
 
   renderer.hideShipyard = function () {
     const shipyardContainer = document.querySelector(

@@ -6,6 +6,7 @@ const Shipyard = (options) => {
   for (const option of options) {
     for (let i = 0; i < option.count; i++) {
       const shipyardShip = Ship(option.length);
+      shipyardShip.direction = 'ltr';
       shipyard.push(shipyardShip);
     }
   }
