@@ -7,17 +7,22 @@ body > header {
 .boards-container {
   display: flex;
   justify-content: space-between;
-  margin: 200px;
+  margin: 100px 100px;
+}
+
+.board-and-shipyard-container {
+  width: 500px;
 }
 
 .player-board-container {
-  width: 30vw;
-  height: 30vw;
+  /* width: 30vw; */
+  /* height: 30vw; */
+  margin-bottom: 24px;
 }
 
 .opponent-board-container {
-  width: 30vw;
-  height: 30vw;
+  /* width: 30vw; */
+  /* height: 30vw; */
 }
 
 .board {
@@ -33,6 +38,8 @@ body > header {
 .square {
   border-top: 3px solid black;
   border-right: 3px solid black;
+  width: 50px;
+  height: 50px;
 }
 
 .missed-square {
@@ -87,6 +94,72 @@ body > header {
   border-right: 3px solid red;
 }
 
+.shipyard-square {
+  width: 50px;
+  height: 50px;
+}
+.shipyard-square {
+  border-width: 0px;
+
+  &.shipyard-top-square {
+    border-top: 3px solid black;
+    border-left: 3px solid black;
+    border-right: 3px solid black;
+  }
+
+  &.shipyard-right-square {
+    border-top: 3px solid black;
+    border-bottom: 3px solid black;
+    border-right: 3px solid black;
+  }
+
+  &.shipyard-bottom-square {
+    border-bottom: 3px solid black;
+    border-right: 3px solid black;
+    border-left: 3px solid black;
+  }
+
+  &.shipyard-left-square {
+    border-top: 3px solid black;
+    border-bottom: 3px solid black;
+    border-left: 3px solid black;
+    border-right: 3px solid black;
+  }
+  &.shipyard-ltr-middle-square {
+    border-top: 3px solid black;
+    border-bottom: 3px solid black;
+    border-right: 3px solid black;
+  }
+
+  &.shipyard-ttb-middle-square {
+    border-left: 3px solid black;
+    border-right: 3px solid black;
+  }
+}
+
+.shipyard {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px;
+
+  .shipyard-ship {
+    display: flex;
+  }
+
+  .ship-ltr {
+    flex-direction: row;
+  }
+
+  .ship-ttb {
+    flex-direction: column;
+  }
+}
+
 .allied-ship {
   background-color: lightblue;
+}
+
+.dragging .allied-ship {
+  border-style: dashed;
+  background-color: lightcyan;
 }
