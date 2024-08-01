@@ -1,6 +1,4 @@
-import Shipyard from './Shipyard';
-
-const optionsSmall = [
+const shipyardBigOption = [
   {
     length: 1,
     count: 4,
@@ -19,6 +17,4 @@ const optionsSmall = [
   },
 ];
 
-const shipyardBig = Shipyard(optionsSmall);
-
-export default shipyardBig;
+export default shipyardBigOption;
