@@ -31,8 +31,6 @@ const ShipyardShip = (length, direction, player) => {
       }
     }
 
-    const shipTakenFromShipyard = new Event('shipTakenFromShipyard');
-
     shipContainer.draggable = true;
     shipContainer.addEventListener('dragstart', (e) => {
       e.dataTransfer.setData('text/plain', length);

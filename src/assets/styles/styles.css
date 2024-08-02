@@ -11,13 +11,11 @@ body > header {
 }
 
 .board-and-shipyard-container {
-  width: 500px;
+  width: 503px;
 }
 
 .player-board-container {
-  /* width: 30vw; */
-  /* height: 30vw; */
-  margin-bottom: 24px;
+  margin-bottom: 50px;
 }
 
 .opponent-board-container {
@@ -31,8 +29,9 @@ body > header {
   border-bottom: 3px solid black;
   border-left: 3px solid black;
   display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  grid-template-rows: repeat(10, 1fr);
+  grid-template-columns: repeat(10, 50px);
+  grid-template-rows: repeat(10, 50px);
+  position: relative;
 }
 
 .square {
@@ -98,6 +97,19 @@ body > header {
   width: 50px;
   height: 50px;
 }
+
+.board .shipyard-square {
+  height: 53px;
+  &:first-child {
+    width: 53px;
+    margin-left: -3px;
+  }
+}
+
+.board .ship-ttb {
+  transform: rotate(90deg) translate(26.5px, 26.5px);
+}
+
 .shipyard-square {
   border-width: 0px;
 
@@ -137,22 +149,26 @@ body > header {
   }
 }
 
+.board .shipyard-ship {
+  position: absolute;
+}
+
+.shipyard-ship {
+  display: flex;
+}
+
+.ship-ltr {
+  flex-direction: row;
+}
+
+.ship-ttb {
+  flex-direction: column;
+}
+
 .shipyard {
   display: flex;
   flex-wrap: wrap;
   gap: 50px;
-
-  .shipyard-ship {
-    display: flex;
-  }
-
-  .ship-ltr {
-    flex-direction: row;
-  }
-
-  .ship-ttb {
-    flex-direction: column;
-  }
 }
 
 .allied-ship {

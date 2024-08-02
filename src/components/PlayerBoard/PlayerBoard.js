@@ -1,6 +1,7 @@
 import BOARD_SIZE from '../../data/BOARD_SIZE';
 import squareIsShip from '../../helpers/squareIsShip';
 import styleSunkShips from '../../helpers/styleSunkShips';
+import ShipyardShip from '../PlayerShipyard/ShipyardShip';
 
 const PlayerBoard = (player) => {
   const playerBoardContainer = document.createElement('div');
@@ -54,6 +55,30 @@ const PlayerBoard = (player) => {
 
           const shipTakenFromShipyard = new Event('shipTakenFromShipyard');
           playerBoardContainer.dispatchEvent(shipTakenFromShipyard);
+
+          const interactiveBoard = document.querySelector(
+            '.board.player-board',
+          );
+
+          const interactiveBoardShip = ShipyardShip(
+            ship.length,
+            ship.direction,
+          );
+
+          console.log(ship.direction, coords);
+
+          if (ship.direction === 'ltr') {
+            interactiveBoardShip.classList.remove('ship-ttb');
+            interactiveBoardShip.classList.add('ship-ltr');
+          } else if (ship.direction === 'ttb') {
+            interactiveBoardShip.classList.remove('ship-ltr');
+            interactiveBoardShip.classList.add('ship-ttb');
+          }
+
+          interactiveBoardShip.style.left = `${coords[1] * 50}px`;
+          interactiveBoardShip.style.top = `${coords[0] * 50}px`;
+
+          interactiveBoard.appendChild(interactiveBoardShip);
         } else {
           document.querySelectorAll('.dragging').forEach((element) => {
             element.classList.remove('dragging');
@@ -63,8 +88,6 @@ const PlayerBoard = (player) => {
         // Remove ship from shipyard and re-render it
         // Draw a draggable ship at these coords
         // Store ship in gameboard
-
-        console.log(shipLength, coords);
       });
 
       square.addEventListener('dragover', (e) => {

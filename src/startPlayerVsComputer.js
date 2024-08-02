@@ -34,8 +34,9 @@ const startPlayerVsComputer = () => {
   renderer.renderOpponentBoard();
   renderer.renderPlayerBoard();
   renderer.setUpDropEventListener();
-
   renderer.renderShipyard();
+
+  renderer.startPlacingPhase();
 
   console.table(player.gameboard.board);
 };

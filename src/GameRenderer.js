@@ -30,11 +30,6 @@ const GameRenderer = (player, opponent, clickSquareCallback) => {
     shipyardContainer.textContent = '';
 
     const playerShipyard = PlayerShipyard(player);
-    console.log(
-      'rendering shipyard',
-      { playerShipyard },
-      { shipyardContainer },
-    );
     shipyardContainer.appendChild(playerShipyard);
   };
 
@@ -74,6 +69,19 @@ const GameRenderer = (player, opponent, clickSquareCallback) => {
     for (const square of playerBoard.childNodes) {
       //
     }
+  };
+
+  renderer.startPlacingPhase = function () {
+    console.log('start placing phase');
+    // disable opponent board
+    // display a start game button
+    // create interactive board
+    const playerBoardContainer = document.querySelector(
+      '.player-board-container',
+    );
+    // const interactiveBoard = document.createElement('div');
+    // interactiveBoard.classList.add('board', 'interactive-board');
+    // playerBoardContainer.appendChild(interactiveBoard);
   };
 
   return renderer;
