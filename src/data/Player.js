@@ -12,6 +12,12 @@ const Player = () => {
     player.shipyard = Shipyard(shipyardBigOption);
   };
 
+  player.sortShipyard = function () {
+    this.shipyard.sort((ship1, ship2) =>
+      ship1.length < ship2.length ? -1 : 1,
+    );
+  };
+
   return player;
 };
 

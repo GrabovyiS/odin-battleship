@@ -5,7 +5,7 @@ const PlayerShipyard = (player) => {
   playerShipyardContainer.classList.add('shipyard');
 
   for (const ship of player.shipyard) {
-    const shipElement = ShipyardShip(ship.length, 'ltr', player);
+    const shipElement = ShipyardShip(ship, 'ltr', player);
     playerShipyardContainer.appendChild(shipElement);
   }
 

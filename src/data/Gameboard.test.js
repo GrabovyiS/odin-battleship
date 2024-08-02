@@ -79,6 +79,17 @@ describe('Placing ships', () => {
   });
 });
 
+test('Deletes a ship', () => {
+  const gameboard = Gameboard();
+  const ship = Ship(2);
+  gameboard.placeShip(ship, [0, 0], 'ltr');
+  gameboard.deleteShip(ship);
+
+  expect(gameboard.board[0][0] === null && gameboard.board[0][1] === null).toBe(
+    true,
+  );
+});
+
 describe('Receiving attack', () => {
   test('Record missed attack', () => {
     const gameboard = Gameboard();

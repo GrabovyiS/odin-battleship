@@ -1,5 +1,6 @@
 import BOARD_SIZE from '../../data/BOARD_SIZE';
 import squareIsShip from '../../helpers/squareIsShip';
+import styleBoardShip from '../../helpers/styleBoardShip';
 import styleSunkShips from '../../helpers/styleSunkShips';
 import ShipyardShip from '../PlayerShipyard/ShipyardShip';
 
@@ -35,16 +36,11 @@ const PlayerBoard = (player) => {
         const shipLength = e.dataTransfer.getData('text/plain');
         const coords = e.target.coords;
 
-        // console.log(player.shipyard);
-        // console.log(shipLength);
-        // player.shipyard.forEach((ship) => {
-        //   console.log(ship.length);
-        // });
-
         const ship = player.shipyard.find((ship) => ship.length == shipLength);
         const shipIndex = player.shipyard.findIndex(
           (ship) => ship.length == shipLength,
         );
+
         if (
           !(
             player.gameboard.placeShip(ship, coords, ship.direction) instanceof
@@ -61,22 +57,12 @@ const PlayerBoard = (player) => {
           );
 
           const interactiveBoardShip = ShipyardShip(
-            ship.length,
+            ship,
             ship.direction,
+            player,
           );
 
-          console.log(ship.direction, coords);
-
-          if (ship.direction === 'ltr') {
-            interactiveBoardShip.classList.remove('ship-ttb');
-            interactiveBoardShip.classList.add('ship-ltr');
-          } else if (ship.direction === 'ttb') {
-            interactiveBoardShip.classList.remove('ship-ltr');
-            interactiveBoardShip.classList.add('ship-ttb');
-          }
-
-          interactiveBoardShip.style.left = `${coords[1] * 50}px`;
-          interactiveBoardShip.style.top = `${coords[0] * 50}px`;
+          styleBoardShip(interactiveBoardShip, coords, ship.direction);
 
           interactiveBoard.appendChild(interactiveBoardShip);
         } else {
@@ -84,16 +70,11 @@ const PlayerBoard = (player) => {
             element.classList.remove('dragging');
           });
         }
-        // If it's possible to place it on that square
-        // Remove ship from shipyard and re-render it
-        // Draw a draggable ship at these coords
-        // Store ship in gameboard
       });
 
       square.addEventListener('dragover', (e) => {
         e.preventDefault();
         e.dataTransfer.dropEffect = 'link';
-        console.log('moving');
       });
     }
   }

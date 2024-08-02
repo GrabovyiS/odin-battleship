@@ -6,8 +6,6 @@ const OpponentBoard = (player, clickSquareCallback) => {
   opponentBoardContainer.classList.add('board');
   opponentBoardContainer.classList.add('opponent-board');
 
-  console.log('re-render');
-
   for (let i = 0; i < BOARD_SIZE; i++) {
     for (let j = 0; j < BOARD_SIZE; j++) {
       const square = document.createElement('div');

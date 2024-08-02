@@ -65,6 +65,17 @@ const Gameboard = () => {
       }
     }
 
+    gameboard.deleteShip = function (ship) {
+      for (let i = 0; i < this.board.length; i++) {
+        for (let j = 0; j < this.board.length; j++) {
+          // only one instance of this ship exists on the board
+          if (this.board[i][j] === ship) {
+            this.board[i][j] = null;
+          }
+        }
+      }
+    };
+
     // Reset coords after moving through
     coords = [startingCoords[0], startingCoords[1]];
 

@@ -1,8 +1,12 @@
-const Ship = (length) => {
+const Ship = (length, direction) => {
   const ship = {};
 
   ship.length = length;
   ship.hits = 0;
+
+  if (!direction) {
+    ship.direction = 'ltr';
+  }
 
   // I like writing factories in this way.
   // Very clear weather or not the function is returned in the resulting object.

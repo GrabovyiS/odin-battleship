@@ -1,4 +1,7 @@
-const ShipyardShip = (length, direction, player) => {
+import Ship from '../../data/Ship';
+import getLiftedShip from '../../helpers/getLiftedShip';
+
+const ShipyardShip = (ship, direction, player) => {
   const shipContainer = document.createElement('div');
   shipContainer.classList.add('shipyard-ship');
 
@@ -8,7 +11,7 @@ const ShipyardShip = (length, direction, player) => {
     shipContainer.classList.add('ship-ttb');
   }
 
-  for (let i = 0; i < length; i++) {
+  for (let i = 0; i < ship.length; i++) {
     const shipSquare = document.createElement('div');
     shipSquare.classList.add('allied-ship');
     shipSquare.classList.add('shipyard-square');
@@ -16,7 +19,7 @@ const ShipyardShip = (length, direction, player) => {
     if (direction === 'ltr') {
       if (i === 0) {
         shipSquare.classList.add('shipyard-left-square');
-      } else if (i === length - 1) {
+      } else if (i === ship.length - 1) {
         shipSquare.classList.add('shipyard-right-square');
       } else {
         shipSquare.classList.add('shipyard-ltr-middle-square');
@@ -24,31 +27,43 @@ const ShipyardShip = (length, direction, player) => {
     } else if (direction === 'ttb') {
       if (i === 0) {
         shipSquare.classList.add('shipyard-top-square');
-      } else if (i === length - 1) {
+      } else if (i === ship.length - 1) {
         shipSquare.classList.add('shipyard-bottom-square');
       } else {
         shipSquare.classList.add('shipyard-ttb-middle-square');
       }
     }
 
-    shipContainer.draggable = true;
-    shipContainer.addEventListener('dragstart', (e) => {
-      e.dataTransfer.setData('text/plain', length);
-
-      console.log('dragstart');
-
-      setTimeout(() => {
-        e.target.classList.add('dragging');
-      }, 1);
-
-      // const takenShipIndex = player.shipyard.find(
-      //   (ship) => ship.length === length,
-      // );
-      // player.shipyard.splice(takenShipIndex, 1);
-    });
-
     shipContainer.appendChild(shipSquare);
   }
+
+  shipContainer.draggable = true;
+  shipContainer.addEventListener('dragstart', (e) => {
+    e.dataTransfer.setData('text/plain', ship.length);
+
+    if (e.target.closest('.board')) {
+      e.target.style.borderLeft = '3px solid black';
+
+      // Lifted up = becomes available
+      player.shipyard.push(ship);
+      console.log(getLiftedShip(player));
+    }
+
+    setTimeout(() => {
+      e.target.classList.add('dragging');
+
+      if (e.target.closest('.board')) {
+        // remove the lingering 'ship was there' appearance
+
+        e.target
+          .closest('.board')
+          .querySelectorAll('.dragging')
+          .forEach((shipElement) => {
+            shipElement.remove();
+          });
+      }
+    }, 1);
+  });
 
   return shipContainer;
 };
