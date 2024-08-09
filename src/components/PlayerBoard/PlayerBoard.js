@@ -1,4 +1,7 @@
 import BOARD_SIZE from '../../data/BOARD_SIZE';
+import getLiftedShip from '../../helpers/getLiftedShip';
+import getShipStartingCoords from '../../helpers/getShipStartingCoords';
+import placeDraggableShip from '../../helpers/placeDraggableShip';
 import squareIsShip from '../../helpers/squareIsShip';
 import styleBoardShip from '../../helpers/styleBoardShip';
 import styleSunkShips from '../../helpers/styleSunkShips';
@@ -30,45 +33,76 @@ const PlayerBoard = (player) => {
         square.classList.add('hit-square');
       }
 
-      // Ship taken from shipyard to gameboard
       square.addEventListener('drop', (e) => {
         e.preventDefault();
-        const shipLength = e.dataTransfer.getData('text/plain');
         const coords = e.target.coords;
+        const shipLength = e.dataTransfer.getData('text/plain');
 
-        const ship = player.shipyard.find((ship) => ship.length == shipLength);
-        const shipIndex = player.shipyard.findIndex(
-          (ship) => ship.length == shipLength,
+        const liftedShip = getLiftedShip(player);
+        const liftedShipInitialCoords = getShipStartingCoords(
+          player.gameboard,
+          liftedShip,
         );
+
+        let droppingShip;
+        let droppingShipIndex;
+
+        if (!liftedShip) {
+          droppingShip = player.shipyard.find(
+            (ship) => ship.length == shipLength,
+          );
+          droppingShipIndex = player.shipyard.findIndex(
+            (ship) => ship.length == shipLength,
+          );
+        } else {
+          droppingShip = liftedShip;
+          droppingShipIndex = player.shipyard.findIndex(
+            (ship) => ship === liftedShip,
+          );
+        }
+
+        if (liftedShip) {
+          player.shipyard.splice(droppingShipIndex, 1);
+          player.gameboard.deleteShip(liftedShip);
+        }
 
         if (
           !(
-            player.gameboard.placeShip(ship, coords, ship.direction) instanceof
-            Error
+            player.gameboard.placeShip(
+              droppingShip,
+              coords,
+              droppingShip.direction,
+            ) instanceof Error
           )
         ) {
-          player.shipyard.splice(shipIndex, 1);
-
-          const shipTakenFromShipyard = new Event('shipTakenFromShipyard');
-          playerBoardContainer.dispatchEvent(shipTakenFromShipyard);
+          if (!liftedShip) {
+            const shipTakenFromShipyard = new Event('shipTakenFromShipyard');
+            playerBoardContainer.dispatchEvent(shipTakenFromShipyard);
+            player.shipyard.splice(droppingShipIndex, 1);
+          }
 
           const interactiveBoard = document.querySelector(
             '.board.player-board',
           );
 
           const interactiveBoardShip = ShipyardShip(
-            ship,
-            ship.direction,
+            droppingShip,
+            droppingShip.direction,
             player,
           );
 
-          styleBoardShip(interactiveBoardShip, coords, ship.direction);
+          styleBoardShip(interactiveBoardShip, coords, droppingShip.direction);
 
           interactiveBoard.appendChild(interactiveBoardShip);
         } else {
-          document.querySelectorAll('.dragging').forEach((element) => {
-            element.classList.remove('dragging');
-          });
+          if (liftedShip) {
+            player.gameboard.placeShip(
+              liftedShip,
+              liftedShipInitialCoords,
+              liftedShip.direction,
+            );
+            placeDraggableShip(player, liftedShip, liftedShipInitialCoords);
+          }
         }
       });
 

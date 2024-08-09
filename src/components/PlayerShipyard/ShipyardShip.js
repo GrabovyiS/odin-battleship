@@ -46,7 +46,6 @@ const ShipyardShip = (ship, direction, player) => {
 
       // Lifted up = becomes available
       player.shipyard.push(ship);
-      console.log(getLiftedShip(player));
     }
 
     setTimeout(() => {

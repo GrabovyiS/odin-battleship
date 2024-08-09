@@ -37,8 +37,6 @@ const startPlayerVsComputer = () => {
   renderer.renderShipyard();
 
   renderer.startPlacingPhase();
-
-  console.table(player.gameboard.board);
 };
 
 export default startPlayerVsComputer;

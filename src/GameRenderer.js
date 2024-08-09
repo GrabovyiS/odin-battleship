@@ -4,6 +4,7 @@ import PlayerShipyard from './components/PlayerShipyard/PlayerShipyard';
 import ShipyardShip from './components/PlayerShipyard/ShipyardShip';
 import getLiftedShip from './helpers/getLiftedShip';
 import getShipStartingCoords from './helpers/getShipStartingCoords';
+import placeDraggableShip from './helpers/placeDraggableShip';
 import styleBoardShip from './helpers/styleBoardShip';
 
 const GameRenderer = (player, opponent, clickSquareCallback) => {
@@ -43,58 +44,36 @@ const GameRenderer = (player, opponent, clickSquareCallback) => {
     window.addEventListener('drop', (e) => {
       e.preventDefault();
 
-      // get lifted up ship - it is not yet deleted from the gameboard and at the same time it is already in the shipyard
       const liftedShip = getLiftedShip(player);
-      console.log(e.target);
 
-      // meaning user tried to put from shipyard not onto the board
-      // because if from shipyard than it does not exist on gameboard
+      // Meaning user tried to put from shipyard not onto the board
       if (!liftedShip) {
         player.sortShipyard();
         this.renderShipyard();
-        // same as doing nothing - just render shipyard
         return;
       }
 
-      // If thrown into nothing
+      // Otherwise meaning ship was taken from the board
+
       if (!e.target.closest('.player-board-container')) {
-        // thrown off the board
         player.gameboard.deleteShip(liftedShip);
-        console.log('thrown off the board');
 
         document.querySelectorAll('.dragging').forEach((element) => {
           element.classList.remove('dragging');
         });
 
-        // the ship is deleted from gameboard when it is lifted up by the mouse
-        // it is temporarily added to the shipyard then also
-        // if it is thrown from the board - it just keeps its place in shipyard so we re-render shipyard
         player.sortShipyard();
         this.renderShipyard();
       }
 
       if (e.target.closest('.allied-ship')) {
-        const liftedShip = getLiftedShip(player);
-
         // return it to where it was if from gameboard
-        // and delete it from shipyard because it is now only on the gameboard
-        const liftedShipCoords = getShipStartingCoords(
+        const liftedShipInitialCoords = getShipStartingCoords(
           player.gameboard,
           liftedShip,
         );
 
-        const returningShip = ShipyardShip(
-          liftedShip,
-          liftedShip.direction,
-          player,
-        );
-
-        styleBoardShip(returningShip, liftedShipCoords, liftedShip.direction);
-
-        const interactiveBoard = document.querySelector('.board.player-board');
-        interactiveBoard.appendChild(returningShip);
-
-        console.table(player.gameboard.board);
+        placeDraggableShip(player, liftedShip, liftedShipInitialCoords);
       }
     });
 
