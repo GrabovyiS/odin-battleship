@@ -10,6 +10,7 @@ export default {
     index: './src/index.js',
   },
   mode: 'development',
+  watch: true,
   module: {
     rules: [
       {
