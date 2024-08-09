@@ -1,5 +1,7 @@
 import Ship from '../../data/Ship';
 import getLiftedShip from '../../helpers/getLiftedShip';
+import getShipStartingCoords from '../../helpers/getShipStartingCoords';
+import styleBoardShip from '../../helpers/styleBoardShip';
 
 const ShipyardShip = (ship, direction, player) => {
   const shipContainer = document.createElement('div');
@@ -62,6 +64,48 @@ const ShipyardShip = (ship, direction, player) => {
           });
       }
     }, 1);
+  });
+
+  shipContainer.addEventListener('click', (e) => {
+    if (!e.target.closest('.board .shipyard-ship')) {
+      return;
+    }
+
+    const oldDirection = direction;
+    const shipStartingCoords = getShipStartingCoords(player.gameboard, ship);
+    const newDirection = oldDirection === 'ltr' ? 'ttb' : 'ltr';
+
+    console.log(shipStartingCoords, newDirection);
+
+    player.gameboard.deleteShip(ship);
+
+    if (
+      !(
+        player.gameboard.placeShip(
+          ship,
+          shipStartingCoords,
+          newDirection,
+        ) instanceof Error
+      )
+    ) {
+      const newShipyardShip = ShipyardShip(ship, newDirection, player);
+      styleBoardShip(newShipyardShip, shipStartingCoords, newDirection);
+      e.target.closest('.board.player-board').appendChild(newShipyardShip);
+
+      console.table(player.gameboard.board);
+
+      e.target.closest('.board .shipyard-ship').remove();
+    }
+
+    // remove the ship from the gameboard
+    // check if if can fit with a different direction
+    // if yes
+    // add the same ship with a different direction to the gameboard
+    // remove old shipyardship
+    // create a new shipyardship and push it
+    // if no
+    // add the ship back to the gameboard
+    // check if its possible to place the old ship with the new direction after deleting it
   });
 
   return shipContainer;

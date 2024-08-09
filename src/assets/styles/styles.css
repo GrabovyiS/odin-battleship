@@ -124,7 +124,7 @@ h1 {
   height: 50px;
 }
 
-.board .shipyard-square {
+.board .ship-ltr .shipyard-square {
   height: 53px;
   &:first-child {
     width: 53px;
@@ -132,8 +132,12 @@ h1 {
   }
 }
 
-.board .ship-ttb {
-  transform: rotate(90deg) translate(26.5px, 26.5px);
+.board .ship-ttb .shipyard-square {
+  width: 53px;
+  margin-left: -3px;
+  &:first-child {
+    height: 53px;
+  }
 }
 
 .shipyard-square {
@@ -141,6 +145,7 @@ h1 {
 
   &.shipyard-top-square {
     border-top: 3px solid black;
+    border-bottom: 3px solid black;
     border-left: 3px solid black;
     border-right: 3px solid black;
   }
@@ -163,6 +168,7 @@ h1 {
     border-left: 3px solid black;
     border-right: 3px solid black;
   }
+
   &.shipyard-ltr-middle-square {
     border-top: 3px solid black;
     border-bottom: 3px solid black;
@@ -170,6 +176,7 @@ h1 {
   }
 
   &.shipyard-ttb-middle-square {
+    border-bottom: 3px solid black;
     border-left: 3px solid black;
     border-right: 3px solid black;
   }
