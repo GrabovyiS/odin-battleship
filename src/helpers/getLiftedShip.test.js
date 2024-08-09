@@ -16,3 +16,15 @@ test('Gets lifted ship', () => {
 
   expect(getLiftedShip(player)).toBe(liftedShip);
 });
+
+test('Return null when there is no lifted ship', () => {
+  const player = Player();
+
+  const gameBoardShip = Ship(3);
+  const shipyardShip = Ship(2);
+
+  player.shipyard.push(shipyardShip);
+  player.gameboard.placeShip(gameBoardShip, [0, 0], 'ltr');
+
+  expect(getLiftedShip(player)).toBeNull();
+});
