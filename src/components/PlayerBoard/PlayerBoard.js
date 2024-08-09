@@ -105,13 +105,13 @@ const PlayerBoard = (player) => {
           }
         }
       });
-
-      square.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        e.dataTransfer.dropEffect = 'link';
-      });
     }
   }
+
+  playerBoardContainer.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'link';
+  });
 
   styleSunkShips(playerBoardContainer, player.gameboard);
 
