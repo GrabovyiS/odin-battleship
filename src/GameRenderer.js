@@ -14,6 +14,16 @@ const GameRenderer = (player, opponent, clickSquareCallback) => {
     const container = document.querySelector('.opponent-board-container');
     container.textContent = '';
 
+    const overlay = document.createElement('div');
+    overlay.classList.add('opponent-overlay');
+
+    const startGameButton = document.createElement('button');
+    startGameButton.classList.add('start-game-button');
+    startGameButton.textContent = 'Start game';
+
+    overlay.appendChild(startGameButton);
+    container.appendChild(overlay);
+
     const opponentBoard = OpponentBoard(opponent, clickSquareCallback);
 
     container.appendChild(opponentBoard);
@@ -84,29 +94,46 @@ const GameRenderer = (player, opponent, clickSquareCallback) => {
       });
   };
 
-  renderer.hideShipyard = function () {
+  renderer.hideShipyardShips = function () {
     const shipyardContainer = document.querySelector(
       '.player-shipyard-container',
     );
     shipyardContainer.textContent = '';
 
-    const playerBoard = document.querySelector('.player-board-container');
-    for (const square of playerBoard.childNodes) {
-      //
-    }
+    const draggableShips = document.querySelectorAll(
+      '.player-board .shipyard-ship',
+    );
+    draggableShips.forEach((shipEl) => {
+      shipEl.remove();
+    });
   };
 
   renderer.startPlacingPhase = function () {
-    console.log('start placing phase');
-    // disable opponent board
-    // display a start game button
-    // create interactive board
-    const playerBoardContainer = document.querySelector(
-      '.player-board-container',
-    );
-    // const interactiveBoard = document.createElement('div');
-    // interactiveBoard.classList.add('board', 'interactive-board');
-    // playerBoardContainer.appendChild(interactiveBoard);
+    document
+      .querySelector('.opponent-board-container')
+      .classList.add('disabled');
+
+    document
+      .querySelector('.start-game-button')
+      .addEventListener('click', (e) => {
+        if (player.shipyard.length === 0) {
+          renderer.startGame();
+        }
+      });
+
+    document.querySelector('h1').textContent = 'Place your ships';
+  };
+
+  renderer.startGame = function () {
+    document
+      .querySelector('.opponent-board-container')
+      .classList.remove('disabled');
+
+    document.querySelector('h1').textContent = 'Your turn';
+
+    this.renderPlayerBoard();
+    this.hideShipyardShips();
+    this.renderOpponentBoard();
   };
 
   return renderer;
