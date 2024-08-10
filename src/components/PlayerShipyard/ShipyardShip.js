@@ -1,5 +1,3 @@
-import Ship from '../../data/Ship';
-import getLiftedShip from '../../helpers/getLiftedShip';
 import getShipStartingCoords from '../../helpers/getShipStartingCoords';
 import styleBoardShip from '../../helpers/styleBoardShip';
 

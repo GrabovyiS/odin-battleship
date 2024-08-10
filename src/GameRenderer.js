@@ -1,12 +1,9 @@
 import OpponentBoard from './components/OpponentBoard/OpponentBoard';
 import PlayerBoard from './components/PlayerBoard/PlayerBoard';
 import PlayerShipyard from './components/PlayerShipyard/PlayerShipyard';
-import ShipyardShip from './components/PlayerShipyard/ShipyardShip';
 import getLiftedShip from './helpers/getLiftedShip';
 import getShipStartingCoords from './helpers/getShipStartingCoords';
 import placeDraggableShip from './helpers/placeDraggableShip';
-import styleBoardShip from './helpers/styleBoardShip';
-import getRandomCoords from './helpers/getRandomCoords';
 import randomizePlacementWithDraggableShips from './helpers/randomizePlacementWithDraggableShips';
 
 const GameRenderer = (player, opponent, clickSquareCallback) => {

@@ -1,6 +1,5 @@
 import Player from './data/Player';
 import ComputerPlayer from './data/ComputerPlayer';
-import Ship from './data/Ship';
 
 import GameRenderer from './GameRenderer';
 
