@@ -137,6 +137,10 @@ h1 {
   }
 }
 
+.opponent-board .sunk-square {
+  background-color: rgba(161, 62, 62, 0.262);
+}
+
 .sunk-top-square {
   border-top: 3px solid red;
   border-left: 3px solid red;

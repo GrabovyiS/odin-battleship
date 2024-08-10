@@ -2,6 +2,8 @@ import getSquareElement from './getSquareElement';
 
 const styleSunkSquareLtr = (boardContainer, shipSquareCoords, shipPosition) => {
   const squareElement = getSquareElement(boardContainer, shipSquareCoords);
+  squareElement.classList.add('sunk-square');
+
   if (shipPosition === 'first') {
     squareElement.classList.add('sunk-left-square');
   }
