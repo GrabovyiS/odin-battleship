@@ -44,6 +44,8 @@ const PlayerBoard = (player) => {
           liftedShip,
         );
 
+        console.log(liftedShip);
+
         let droppingShip;
         let droppingShipIndex;
 

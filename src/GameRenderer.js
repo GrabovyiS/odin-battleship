@@ -66,6 +66,7 @@ const GameRenderer = (player, opponent, clickSquareCallback) => {
       // Otherwise meaning ship was taken from the board
 
       if (!e.target.closest('.player-board-container')) {
+        console.log(liftedShip, 'is dropped');
         player.gameboard.deleteShip(liftedShip);
 
         document.querySelectorAll('.dragging').forEach((element) => {

@@ -48,6 +48,7 @@ const ShipyardShip = (ship, direction, player) => {
 
       // Lifted up = becomes available
       player.shipyard.push(ship);
+      console.log(ship, 'is lifted');
     }
 
     setTimeout(() => {
@@ -74,8 +75,7 @@ const ShipyardShip = (ship, direction, player) => {
     const oldDirection = direction;
     const shipStartingCoords = getShipStartingCoords(player.gameboard, ship);
     const newDirection = oldDirection === 'ltr' ? 'ttb' : 'ltr';
-
-    console.log(shipStartingCoords, newDirection);
+    ship.direction = newDirection;
 
     player.gameboard.deleteShip(ship);
 
@@ -84,15 +84,16 @@ const ShipyardShip = (ship, direction, player) => {
         player.gameboard.placeShip(
           ship,
           shipStartingCoords,
-          newDirection,
+          ship.direction,
         ) instanceof Error
       )
     ) {
       const newShipyardShip = ShipyardShip(ship, newDirection, player);
       styleBoardShip(newShipyardShip, shipStartingCoords, newDirection);
-      e.target.closest('.board.player-board').appendChild(newShipyardShip);
 
-      console.table(player.gameboard.board);
+      // console.log(newShipyardShip);
+
+      e.target.closest('.board.player-board').appendChild(newShipyardShip);
 
       e.target.closest('.board .shipyard-ship').remove();
     }
