@@ -2,8 +2,7 @@ import forEachShipSquare from './forEachShipCoord';
 import Gameboard from '../data/Gameboard';
 import Ship from '../data/Ship';
 
-// I don't want to test stuff like "if gameboard is not a gameboard"
-
+// Omitted testing for things like 'if gameboard is not a gameboard'
 test('Works if one or more callbacks are not provided', () => {
   const gameboard = Gameboard();
   const ship = Ship(4);

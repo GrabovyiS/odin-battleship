@@ -90,9 +90,7 @@ const GameRenderer = (player, opponent, clickSquareCallback) => {
       }
 
       // Otherwise meaning ship was taken from the board
-
       if (!e.target.closest('.player-board-container')) {
-        console.log(liftedShip, 'is dropped');
         player.gameboard.deleteShip(liftedShip);
 
         document.querySelectorAll('.dragging').forEach((element) => {
@@ -104,7 +102,7 @@ const GameRenderer = (player, opponent, clickSquareCallback) => {
       }
 
       if (e.target.closest('.allied-ship')) {
-        // return it to where it was if from gameboard
+        // Return it to where it was if from gameboard
         const liftedShipInitialCoords = getShipStartingCoords(
           player.gameboard,
           liftedShip,

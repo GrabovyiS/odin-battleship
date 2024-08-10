@@ -48,15 +48,13 @@ const ShipyardShip = (ship, direction, player) => {
 
       // Lifted up = becomes available
       player.shipyard.push(ship);
-      console.log(ship, 'is lifted');
     }
 
     setTimeout(() => {
       e.target.classList.add('dragging');
 
       if (e.target.closest('.board')) {
-        // remove the lingering 'ship was there' appearance
-
+        // Remove the lingering 'ship was there' appearance
         e.target
           .closest('.board')
           .querySelectorAll('.dragging')
@@ -91,22 +89,10 @@ const ShipyardShip = (ship, direction, player) => {
       const newShipyardShip = ShipyardShip(ship, newDirection, player);
       styleBoardShip(newShipyardShip, shipStartingCoords, newDirection);
 
-      // console.log(newShipyardShip);
-
       e.target.closest('.board.player-board').appendChild(newShipyardShip);
 
       e.target.closest('.board .shipyard-ship').remove();
     }
-
-    // remove the ship from the gameboard
-    // check if if can fit with a different direction
-    // if yes
-    // add the same ship with a different direction to the gameboard
-    // remove old shipyardship
-    // create a new shipyardship and push it
-    // if no
-    // add the ship back to the gameboard
-    // check if its possible to place the old ship with the new direction after deleting it
   });
 
   return shipContainer;

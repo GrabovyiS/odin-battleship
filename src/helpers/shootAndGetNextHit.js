@@ -6,7 +6,6 @@ const shootAndGetNextHit = (computerPlayer) => {
   let hitSquareCoords = null;
 
   while (hit === false) {
-    // Just a reference to make code a bit more readable
     let currentHitsBoard = computerPlayer.opponent.gameboard.hitsBoard;
 
     let boardBeforeAttack = copyBoard(currentHitsBoard);

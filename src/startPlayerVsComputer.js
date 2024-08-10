@@ -21,7 +21,6 @@ const startPlayerVsComputer = () => {
         return;
       }
 
-      console.log({ computerAttackResult });
       if (computerAttackResult === 'hit') {
         makeComputerTurn();
       } else {

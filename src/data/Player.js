@@ -39,13 +39,6 @@ const Player = () => {
             ) instanceof Error
           )
         ) {
-          console.log(
-            'placed ship',
-            currentShip,
-            'at these coords',
-            randomCoords,
-          );
-
           const shipIndex = this.shipyard.findIndex(
             (ship) => ship === currentShip,
           );
@@ -55,9 +48,6 @@ const Player = () => {
         }
       }
     }
-
-    console.log(player.shipyard);
-    console.table(player.gameboard.board);
   };
 
   return player;
