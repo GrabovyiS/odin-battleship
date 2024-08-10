@@ -6,6 +6,8 @@ import getLiftedShip from './helpers/getLiftedShip';
 import getShipStartingCoords from './helpers/getShipStartingCoords';
 import placeDraggableShip from './helpers/placeDraggableShip';
 import styleBoardShip from './helpers/styleBoardShip';
+import getRandomCoords from './helpers/getRandomCoords';
+import randomizePlacementWithDraggableShips from './helpers/randomizePlacementWithDraggableShips';
 
 const GameRenderer = (player, opponent, clickSquareCallback) => {
   const renderer = {};
@@ -52,9 +54,10 @@ const GameRenderer = (player, opponent, clickSquareCallback) => {
       '.randomize-placement-button',
     );
     randomizeButton.addEventListener('click', () => {
-      const shipyardElement = document.querySelector('.shipyard');
+      this.resetPlacement();
 
-      player.gameboard.resetBoard();
+      randomizePlacementWithDraggableShips(player);
+
       this.renderShipyard();
     });
   };

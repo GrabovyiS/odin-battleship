@@ -15,7 +15,7 @@ const PlayerBoard = (player) => {
   for (let i = 0; i < BOARD_SIZE; i++) {
     for (let j = 0; j < BOARD_SIZE; j++) {
       const square = document.createElement('div');
-      square.classList.add(`i_${i}_j:_${j}`);
+      square.classList.add(`i_${i}_j_${j}`);
       square.classList.add('square');
       playerBoardContainer.appendChild(square);
       square.coords = [i, j];
