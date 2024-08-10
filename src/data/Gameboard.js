@@ -130,8 +130,10 @@ const Gameboard = () => {
     ) {
       this.board[coords[0]][coords[1]].hit();
       this.hitsBoard[coords[0]][coords[1]] = 'hit';
+      return 'hit';
     } else if (this.board[coords[0]][coords[1]] === null) {
       this.hitsBoard[coords[0]][coords[1]] = 'missed';
+      return 'missed';
     }
   };
 
@@ -140,8 +142,6 @@ const Gameboard = () => {
       for (let j = 0; j < this.board.length; j++) {
         if (squareIsShip(gameboard, [i, j])) {
           if (!this.board[i][j].isSunk()) {
-            console.log(this.board[i][j]);
-            console.log('found a non-sunk ship');
             return false;
           }
         }

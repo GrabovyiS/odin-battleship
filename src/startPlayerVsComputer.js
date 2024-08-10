@@ -10,22 +10,38 @@ const startPlayerVsComputer = () => {
 
   const biggestShip2 = Ship(4);
 
-  const bigShip2 = Ship(3);
-
-  const mediumShip2 = Ship(2);
-
   const smallShip2 = Ship(1);
 
   computerPlayer.gameboard.placeShip(biggestShip2, [1, 1], 'ltr');
   computerPlayer.gameboard.placeShip(smallShip2, [9, 9]);
 
+  console.log(computerPlayer.shipyard);
+
+  const makeComputerTurn = () => {
+    let computerAttackResult = computerPlayer.makeTurn();
+
+    setTimeout(() => {
+      renderer.renderPlayerBoard();
+
+      if (player.gameboard.allSunk()) {
+        renderer.showDefeat();
+        return;
+      }
+
+      console.log({ computerAttackResult });
+      if (computerAttackResult === 'hit') {
+        makeComputerTurn();
+      } else {
+        renderer.showPlayersTurn();
+      }
+    }, 480);
+  };
+
   const onClickSquare = function (event) {
-    if (
-      !(
-        computerPlayer.gameboard.receiveAttack(event.target.coords) instanceof
-        Error
-      )
-    ) {
+    const attackResult = computerPlayer.gameboard.receiveAttack(
+      event.target.coords,
+    );
+    if (!(attackResult instanceof Error)) {
       if (computerPlayer.gameboard.allSunk()) {
         renderer.showVictory();
         renderer.renderOpponentBoard();
@@ -33,18 +49,13 @@ const startPlayerVsComputer = () => {
       }
 
       renderer.renderOpponentBoard();
+
+      if (attackResult === 'hit') {
+        return;
+      }
+
       renderer.showOpponentsTurn();
-      setTimeout(() => {
-        computerPlayer.makeTurn();
-        renderer.renderPlayerBoard();
-
-        if (player.gameboard.allSunk()) {
-          renderer.showDefeat();
-          return;
-        }
-
-        renderer.showPlayersTurn();
-      }, 480);
+      makeComputerTurn();
     }
   };
 
@@ -58,9 +69,9 @@ const startPlayerVsComputer = () => {
   document
     .querySelector('.start-game-button')
     .addEventListener('click', (e) => {
-      // if (player.shipyard.length === 0) {
-      renderer.startGame();
-      // }
+      if (player.shipyard.length === 0) {
+        renderer.startGame();
+      }
     });
 };
 

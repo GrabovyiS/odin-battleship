@@ -18,7 +18,7 @@ const ComputerPlayer = (opponent) => {
       // Get a square that hasn't been hit before
       hitCoords = getUnhitSquareCoords(this.opponent.gameboard);
 
-      this.opponent.gameboard.receiveAttack(hitCoords);
+      const attackResult = this.opponent.gameboard.receiveAttack(hitCoords);
 
       if (squareIsShip(this.opponent.gameboard, hitCoords)) {
         if (
@@ -31,7 +31,7 @@ const ComputerPlayer = (opponent) => {
         }
       }
 
-      return;
+      return attackResult;
     }
 
     // If hit a ship once
@@ -51,7 +51,7 @@ const ComputerPlayer = (opponent) => {
         topBottomAdjacentCoords,
       );
 
-      this.opponent.gameboard.receiveAttack(hitCoords);
+      const attackResult = this.opponent.gameboard.receiveAttack(hitCoords);
 
       if (squareIsShip(this.opponent.gameboard, hitCoords)) {
         if (
@@ -63,7 +63,7 @@ const ComputerPlayer = (opponent) => {
         }
       }
 
-      return;
+      return attackResult;
     }
 
     // If hit a ship at least twice in a row
@@ -78,7 +78,7 @@ const ComputerPlayer = (opponent) => {
         newPossibleHitCoords,
       );
 
-      this.opponent.gameboard.receiveAttack(hitCoords);
+      const attackResult = this.opponent.gameboard.receiveAttack(hitCoords);
 
       if (squareIsShip(this.opponent.gameboard, hitCoords)) {
         if (
@@ -89,6 +89,8 @@ const ComputerPlayer = (opponent) => {
           this.lastHitShipCoords = null;
         }
       }
+
+      return attackResult;
     }
   };
 
