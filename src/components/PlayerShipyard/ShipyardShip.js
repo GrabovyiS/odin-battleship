@@ -49,6 +49,11 @@ const ShipyardShip = (ship, direction, player) => {
     }
 
     setTimeout(() => {
+      // If dragging events are handled programmatically and are processed too fast for this
+      if (!e.target) {
+        return;
+      }
+
       e.target.classList.add('dragging');
 
       if (e.target.closest('.board')) {
