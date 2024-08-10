@@ -25,9 +25,7 @@ const Player = () => {
     for (let i = 0; i < largeToSmallShipyard.length; i++) {
       const currentShip = largeToSmallShipyard[i];
 
-      let counter = 0;
-      while (counter < 1000) {
-        counter++;
+      while (true) {
         currentShip.direction =
           Math.floor(Math.random() * 2) === 1 ? 'ltr' : 'ttb';
         let randomCoords = getRandomCoords();
