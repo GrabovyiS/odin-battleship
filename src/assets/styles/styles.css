@@ -20,7 +20,13 @@ h1 {
 }
 
 .player-board-container {
-  margin-bottom: 50px;
+  margin-bottom: 25px;
+}
+
+.controls {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 25px;
 }
 
 .opponent-board-container {

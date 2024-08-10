@@ -29,11 +29,34 @@ const GameRenderer = (player, opponent, clickSquareCallback) => {
     container.appendChild(opponentBoard);
   };
 
+  renderer.resetPlacement = function () {
+    player.resetShipyard();
+    player.gameboard.resetBoard();
+    this.renderShipyard();
+    this.clearBoardFromDraggableShips();
+  };
+
   renderer.renderPlayerBoard = function () {
     const container = document.querySelector('.player-board-container');
     container.textContent = '';
+
     const playerBoard = PlayerBoard(player);
     container.appendChild(playerBoard);
+
+    const resetButton = document.querySelector('.reset-placement-button');
+    resetButton.addEventListener('click', () => {
+      this.resetPlacement();
+    });
+
+    const randomizeButton = document.querySelector(
+      '.randomize-placement-button',
+    );
+    randomizeButton.addEventListener('click', () => {
+      const shipyardElement = document.querySelector('.shipyard');
+
+      player.gameboard.resetBoard();
+      this.renderShipyard();
+    });
   };
 
   renderer.renderShipyard = function () {
@@ -95,12 +118,7 @@ const GameRenderer = (player, opponent, clickSquareCallback) => {
       });
   };
 
-  renderer.hideShipyardShips = function () {
-    const shipyardContainer = document.querySelector(
-      '.player-shipyard-container',
-    );
-    shipyardContainer.textContent = '';
-
+  renderer.clearBoardFromDraggableShips = function () {
     const draggableShips = document.querySelectorAll(
       '.player-board .shipyard-ship',
     );
@@ -109,12 +127,24 @@ const GameRenderer = (player, opponent, clickSquareCallback) => {
     });
   };
 
+  renderer.hideShipyardShips = function () {
+    const shipyardContainer = document.querySelector(
+      '.player-shipyard-container',
+    );
+    shipyardContainer.textContent = '';
+
+    this.clearBoardFromDraggableShips();
+  };
+
   renderer.startPlacingPhase = function () {
     document
       .querySelector('.opponent-board-container')
       .classList.add('disabled');
 
     document.querySelector('h1').textContent = 'Place your ships';
+    document.querySelector('.reset-placement-button').style.display = 'block';
+    document.querySelector('.randomize-placement-button').style.display =
+      'block';
   };
 
   renderer.startGame = function () {
@@ -123,6 +153,9 @@ const GameRenderer = (player, opponent, clickSquareCallback) => {
       .classList.remove('disabled');
 
     document.querySelector('h1').textContent = 'Your turn';
+    document.querySelector('.reset-placement-button').style.display = 'none';
+    document.querySelector('.randomize-placement-button').style.display =
+      'none';
 
     this.renderPlayerBoard();
     this.hideShipyardShips();
