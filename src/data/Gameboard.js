@@ -1,5 +1,6 @@
 import BOARD_SIZE from './BOARD_SIZE';
 import coordsOutOfBoardBounds from '../helpers/coordsOutOfBoardBounds';
+import squareIsShip from '../helpers/squareIsShip';
 
 const Gameboard = () => {
   const gameboard = {};
@@ -17,11 +18,7 @@ const Gameboard = () => {
     gameboard.hitsBoard.push(gameboard.board[i].slice());
   }
 
-  gameboard.shipsInBattle = [];
-
   gameboard.resetBoard = function () {
-    this.shipsInBattle = [];
-
     for (let i = 0; i < BOARD_SIZE; i++) {
       for (let j = 0; j < BOARD_SIZE; j++) {
         gameboard.board[i][j] = null;
@@ -109,8 +106,6 @@ const Gameboard = () => {
       }
     }
 
-    this.shipsInBattle.push(ship);
-
     // Reset the coords after moving through
     coords = [startingCoords[0], startingCoords[1]];
 
@@ -141,9 +136,15 @@ const Gameboard = () => {
   };
 
   gameboard.allSunk = function () {
-    for (const ship of this.shipsInBattle) {
-      if (!ship.isSunk()) {
-        return false;
+    for (let i = 0; i < this.board.length; i++) {
+      for (let j = 0; j < this.board.length; j++) {
+        if (squareIsShip(gameboard, [i, j])) {
+          if (!this.board[i][j].isSunk()) {
+            console.log(this.board[i][j]);
+            console.log('found a non-sunk ship');
+            return false;
+          }
+        }
       }
     }
 
