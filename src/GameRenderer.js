@@ -114,14 +114,6 @@ const GameRenderer = (player, opponent, clickSquareCallback) => {
       .querySelector('.opponent-board-container')
       .classList.add('disabled');
 
-    document
-      .querySelector('.start-game-button')
-      .addEventListener('click', (e) => {
-        if (player.shipyard.length === 0) {
-          renderer.startGame();
-        }
-      });
-
     document.querySelector('h1').textContent = 'Place your ships';
   };
 
@@ -135,6 +127,32 @@ const GameRenderer = (player, opponent, clickSquareCallback) => {
     this.renderPlayerBoard();
     this.hideShipyardShips();
     this.renderOpponentBoard();
+  };
+
+  renderer.showPlayersTurn = function () {
+    document.querySelector('h1').textContent = 'Your turn';
+    document
+      .querySelector('.opponent-board-container')
+      .classList.remove('paused');
+  };
+
+  renderer.showOpponentsTurn = function () {
+    document.querySelector('h1').textContent = "Opponent's turn";
+    document.querySelector('.opponent-board-container').classList.add('paused');
+  };
+
+  renderer.showVictory = function () {
+    document.querySelector('h1').textContent = 'Victory!';
+    document
+      .querySelector('.opponent-board-container')
+      .classList.add('finished');
+  };
+
+  renderer.showDefeat = function () {
+    document.querySelector('h1').textContent = 'Defeat';
+    document
+      .querySelector('.opponent-board-container')
+      .classList.add('finished');
   };
 
   return renderer;

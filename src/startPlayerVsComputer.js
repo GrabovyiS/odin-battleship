@@ -17,17 +17,35 @@ const startPlayerVsComputer = () => {
   const smallShip2 = Ship(1);
 
   computerPlayer.gameboard.placeShip(biggestShip2, [1, 1], 'ltr');
-  computerPlayer.gameboard.placeShip(bigShip2, [6, 2], 'ttb');
-  computerPlayer.gameboard.placeShip(mediumShip2, [4, 6], 'ltr');
   computerPlayer.gameboard.placeShip(smallShip2, [9, 9]);
 
   const onClickSquare = function (event) {
-    computerPlayer.gameboard.receiveAttack(event.target.coords);
-    renderer.renderOpponentBoard();
-    setTimeout(() => {
-      computerPlayer.makeTurn();
-      renderer.renderPlayerBoard();
-    }, 250);
+    if (
+      !(
+        computerPlayer.gameboard.receiveAttack(event.target.coords) instanceof
+        Error
+      )
+    ) {
+      if (computerPlayer.gameboard.allSunk()) {
+        renderer.showVictory();
+        renderer.renderOpponentBoard();
+        return;
+      }
+
+      renderer.renderOpponentBoard();
+      renderer.showOpponentsTurn();
+      setTimeout(() => {
+        computerPlayer.makeTurn();
+        renderer.renderPlayerBoard();
+
+        if (player.gameboard.allSunk()) {
+          renderer.showDefeat();
+          return;
+        }
+
+        renderer.showPlayersTurn();
+      }, 480);
+    }
   };
 
   const renderer = GameRenderer(player, computerPlayer, onClickSquare);
@@ -37,6 +55,13 @@ const startPlayerVsComputer = () => {
   renderer.renderShipyard();
 
   renderer.startPlacingPhase();
+  document
+    .querySelector('.start-game-button')
+    .addEventListener('click', (e) => {
+      // if (player.shipyard.length === 0) {
+      renderer.startGame();
+      // }
+    });
 };
 
 export default startPlayerVsComputer;
