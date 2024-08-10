@@ -60,9 +60,9 @@ const startPlayerVsComputer = () => {
   document
     .querySelector('.start-game-button')
     .addEventListener('click', (e) => {
-      // if (player.shipyard.length === 0) {
-      renderer.startGame();
-      // }
+      if (player.shipyard.length === 0) {
+        renderer.startGame();
+      }
     });
 };
 
