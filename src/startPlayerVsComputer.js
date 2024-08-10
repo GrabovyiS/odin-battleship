@@ -6,16 +6,9 @@ import GameRenderer from './GameRenderer';
 
 const startPlayerVsComputer = () => {
   const player = Player();
+
   const computerPlayer = ComputerPlayer(player);
-
-  const biggestShip2 = Ship(4);
-
-  const smallShip2 = Ship(1);
-
-  computerPlayer.gameboard.placeShip(biggestShip2, [1, 1], 'ltr');
-  computerPlayer.gameboard.placeShip(smallShip2, [9, 9]);
-
-  console.log(computerPlayer.shipyard);
+  computerPlayer.populateGameboardRandomly();
 
   const makeComputerTurn = () => {
     let computerAttackResult = computerPlayer.makeTurn();
@@ -69,9 +62,9 @@ const startPlayerVsComputer = () => {
   document
     .querySelector('.start-game-button')
     .addEventListener('click', (e) => {
-      if (player.shipyard.length === 0) {
-        renderer.startGame();
-      }
+      // if (player.shipyard.length === 0) {
+      renderer.startGame();
+      // }
     });
 };
 
