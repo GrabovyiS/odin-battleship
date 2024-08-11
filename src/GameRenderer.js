@@ -97,6 +97,14 @@ const GameRenderer = (player, opponent, clickSquareCallback) => {
       if (!e.target.closest('.player-board-container')) {
         player.gameboard.deleteShip(liftedShip);
 
+        const liftedShipIndex = player.shipyard.findIndex(
+          (ship) => ship === liftedShip,
+        );
+        player.shipyard.splice(liftedShipIndex, 1);
+
+        liftedShip.direction = 'ltr';
+        player.shipyard.push(liftedShip);
+
         document.querySelectorAll('.dragging').forEach((element) => {
           element.classList.remove('dragging');
         });
