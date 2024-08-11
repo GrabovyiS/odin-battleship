@@ -124,6 +124,40 @@ describe('Receiving attack', () => {
     gameboard.receiveAttack([0, 0]);
     expect(gameboard.receiveAttack([0, 0])).toBeInstanceOf(Error);
   });
+
+  test('Sets adjacent squares to "miss" after sinking a ship', () => {
+    const gameboard = Gameboard();
+    const ship1 = Ship(2);
+    gameboard.placeShip(ship1, [1, 1], 'ltr');
+
+    gameboard.receiveAttack([1, 1]);
+    gameboard.receiveAttack([1, 2]);
+
+    expect(gameboard.hitsBoard[0][0]).toBe('missed');
+    expect(gameboard.hitsBoard[0][1]).toBe('missed');
+    expect(gameboard.hitsBoard[0][2]).toBe('missed');
+    expect(gameboard.hitsBoard[0][3]).toBe('missed');
+
+    expect(gameboard.hitsBoard[2][0]).toBe('missed');
+    expect(gameboard.hitsBoard[2][1]).toBe('missed');
+    expect(gameboard.hitsBoard[2][2]).toBe('missed');
+    expect(gameboard.hitsBoard[2][3]).toBe('missed');
+
+    expect(gameboard.hitsBoard[1][0]).toBe('missed');
+    expect(gameboard.hitsBoard[1][3]).toBe('missed');
+
+    const ship2 = Ship(1);
+    gameboard.placeShip(ship2, [9, 9], 'ltr');
+
+    gameboard.receiveAttack([9, 9]);
+    expect(gameboard.hitsBoard[8][9]).toBe('missed');
+    expect(gameboard.hitsBoard[9][8]).toBe('missed');
+    expect(gameboard.hitsBoard[8][8]).toBe('missed');
+
+    expect(gameboard.hitsBoard[7][7]).toBeNull();
+    expect(gameboard.hitsBoard[0][4]).toBeNull();
+    expect(gameboard.hitsBoard[3][1]).toBeNull();
+  });
 });
 
 describe('All ships sunk', () => {

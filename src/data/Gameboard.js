@@ -1,6 +1,7 @@
 import BOARD_SIZE from './BOARD_SIZE';
 import coordsOutOfBoardBounds from '../helpers/coordsOutOfBoardBounds';
 import squareIsShip from '../helpers/squareIsShip';
+import setHitsAroundSunkShip from '../helpers/setHitsAroundSunkShip';
 
 const Gameboard = () => {
   const gameboard = {};
@@ -128,8 +129,15 @@ const Gameboard = () => {
       typeof this.board[coords[0]][coords[1]] === 'object' &&
       this.board[coords[0]][coords[1]] !== null
     ) {
-      this.board[coords[0]][coords[1]].hit();
+      const ship = this.board[coords[0]][coords[1]];
+
+      ship.hit();
       this.hitsBoard[coords[0]][coords[1]] = 'hit';
+
+      if (ship.isSunk()) {
+        setHitsAroundSunkShip(gameboard, ship);
+      }
+
       return 'hit';
     } else if (this.board[coords[0]][coords[1]] === null) {
       this.hitsBoard[coords[0]][coords[1]] = 'missed';
