@@ -106,12 +106,15 @@ const GameRenderer = (player, opponent, clickSquareCallback) => {
       }
 
       if (e.target.closest('.allied-ship')) {
-        // Return it to where it was if from gameboard
+        const liftedShipIndex = player.shipyard.findIndex(
+          (ship) => ship === liftedShip,
+        );
+        player.shipyard.splice(liftedShipIndex, 1);
+
         const liftedShipInitialCoords = getShipStartingCoords(
           player.gameboard,
           liftedShip,
         );
-
         placeDraggableShip(player, liftedShip, liftedShipInitialCoords);
       }
     });
