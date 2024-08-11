@@ -34,11 +34,6 @@ button:hover {
   transform: scale(1.04);
 }
 
-/* button:not(.start-game-button):active {
-  transition: background-color 0.04s ease;
-  background-color: rgb(65, 206, 58);
-} */
-
 button:active {
   transition: background-color 0.04s ease;
   background-color: rgb(65, 206, 58);
@@ -321,6 +316,13 @@ button.error {
 
 .board .shipyard-ship {
   position: absolute;
+
+  &.error {
+    transform: rotate(3deg);
+    .shipyard-square {
+      border-color: red;
+    }
+  }
 }
 
 .shipyard-ship {

@@ -98,6 +98,11 @@ const ShipyardShip = (ship, direction, player) => {
     } else {
       ship.direction = oldDirection;
       player.gameboard.placeShip(ship, shipStartingCoords, ship.direction);
+
+      e.target.closest('.shipyard-ship').classList.add('error');
+      setTimeout(() => {
+        e.target.closest('.shipyard-ship').classList.remove('error');
+      }, 150);
     }
   });
 

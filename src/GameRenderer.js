@@ -146,7 +146,8 @@ const GameRenderer = (player, opponent, clickSquareCallback) => {
       .querySelector('.opponent-board-container')
       .classList.add('disabled');
 
-    document.querySelector('h1').textContent = 'Place your ships';
+    document.querySelector('h1').textContent =
+      'Place your ships (click to turn)';
     document.querySelector('.reset-placement-button').style.display = 'block';
     document.querySelector('.randomize-placement-button').style.display =
       'block';
