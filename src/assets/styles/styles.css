@@ -148,14 +148,32 @@ h1 {
 }
 
 .sunk-right-square {
+  width: 53px;
+  margin-left: -3px;
+  height: 53px;
+  margin-bottom: -3px;
   border-top: 3px solid red;
   border-bottom: 3px solid red;
   border-right: 3px solid red;
 }
 
 .sunk-bottom-square {
+  width: 53px;
+  margin-left: -3px;
+  height: 53px;
+  margin-bottom: -3px;
   border-bottom: 3px solid red;
   border-right: 3px solid red;
+  border-left: 3px solid red;
+}
+
+.sunk-ltr-middle-square {
+  width: 53px;
+  margin-left: -3px;
+  height: 53px;
+  margin-bottom: -3px;
+  border-top: 3px solid red;
+  border-bottom: 3px solid red;
   border-left: 3px solid red;
 }
 
@@ -165,14 +183,14 @@ h1 {
   border-left: 3px solid red;
 }
 
-.sunk-ltr-middle-square {
-  border-top: 3px solid red;
-  border-bottom: 3px solid red;
-}
-
 .sunk-ttb-middle-square {
+  width: 53px;
+  margin-left: -3px;
+  height: 53px;
+  margin-bottom: -3px;
   border-left: 3px solid red;
   border-right: 3px solid red;
+  border-top: 3px solid red;
 }
 
 .shipyard-square {
