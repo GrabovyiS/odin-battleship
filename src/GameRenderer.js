@@ -176,7 +176,7 @@ const GameRenderer = (player, opponent, clickSquareCallback) => {
   };
 
   renderer.showOpponentsTurn = function () {
-    document.querySelector('h1').textContent = "Opponent's turn";
+    document.querySelector('h1').textContent = 'Opponents turn';
     document.querySelector('.opponent-board-container').classList.add('paused');
   };
 
