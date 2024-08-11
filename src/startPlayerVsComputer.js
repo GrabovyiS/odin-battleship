@@ -34,8 +34,8 @@ const startPlayerVsComputer = () => {
     );
     if (!(attackResult instanceof Error)) {
       if (computerPlayer.gameboard.allSunk()) {
-        renderer.showVictory();
         renderer.renderOpponentBoard();
+        renderer.showVictory();
         return;
       }
 
@@ -56,14 +56,23 @@ const startPlayerVsComputer = () => {
   renderer.setUpDropEventListener();
   renderer.renderShipyard();
 
-  renderer.startPlacingPhase();
   document
-    .querySelector('.start-game-button')
-    .addEventListener('click', (e) => {
-      if (player.shipyard.length === 0) {
-        renderer.startGame();
-      }
-    });
+    .querySelector('.play-again-button')
+    .addEventListener('click', startPlayerVsComputer);
+
+  renderer.startPlacingPhase();
+  const startGameButton = document.querySelector('.start-game-button');
+
+  startGameButton.addEventListener('click', (e) => {
+    if (player.shipyard.length === 0) {
+      renderer.startGame();
+    } else {
+      startGameButton.classList.add('error');
+      setTimeout(() => {
+        startGameButton.classList.remove('error');
+      }, 150);
+    }
+  });
 };
 
 export default startPlayerVsComputer;

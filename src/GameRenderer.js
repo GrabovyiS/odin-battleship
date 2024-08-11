@@ -13,6 +13,13 @@ const GameRenderer = (player, opponent, clickSquareCallback) => {
     const container = document.querySelector('.opponent-board-container');
     container.textContent = '';
 
+    container.classList.remove('paused', 'finished', 'disabled');
+
+    const playAgainButton = document.querySelector('.play-again-button');
+
+    playAgainButton.classList.remove('shown');
+    playAgainButton.classList.add('hidden');
+
     const overlay = document.createElement('div');
     overlay.classList.add('opponent-overlay');
 
@@ -172,7 +179,14 @@ const GameRenderer = (player, opponent, clickSquareCallback) => {
     document.querySelector('.opponent-board-container').classList.add('paused');
   };
 
+  renderer.showEndOfGame = function () {
+    const playAgainButton = document.querySelector('.play-again-button');
+    playAgainButton.classList.add('shown');
+    playAgainButton.classList.remove('hidden');
+  };
+
   renderer.showVictory = function () {
+    this.showEndOfGame();
     document.querySelector('h1').textContent = 'Victory!';
     document
       .querySelector('.opponent-board-container')
@@ -180,6 +194,7 @@ const GameRenderer = (player, opponent, clickSquareCallback) => {
   };
 
   renderer.showDefeat = function () {
+    this.showEndOfGame();
     document.querySelector('h1').textContent = 'Defeat';
     document
       .querySelector('.opponent-board-container')

@@ -6,6 +6,8 @@ import getNewPossibleHitCoordsAfterMultipleHits from '../helpers/getNewPossibleH
 const ComputerPlayer = (opponent) => {
   const computerPlayer = Player();
 
+  computerPlayer.isComputerPlayer = true;
+
   computerPlayer.opponent = opponent;
 
   computerPlayer.lastHitShipCoords;

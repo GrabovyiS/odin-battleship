@@ -1,18 +1,58 @@
+* {
+  font-family: monospace;
+}
+
 body > header {
   display: flex;
   justify-content: center;
-  padding: 40px;
+  padding: 4px;
 }
 
 h1 {
   text-align: center;
-  margin: 20px 0px 40px 0px;
+  font-size: 28px;
+  margin: 36px 0px 24px 0px;
+}
+
+h2 {
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+button {
+  padding: 16px;
+  outline: none;
+  cursor: pointer;
+  font-size: 18px;
+  background-color: white;
+  border: 3px solid black;
+  transition: background-color 0.4s ease;
+}
+
+button:hover {
+  transform: scale(1.04);
+}
+
+/* button:not(.start-game-button):active {
+  transition: background-color 0.04s ease;
+  background-color: rgb(65, 206, 58);
+} */
+
+button:active {
+  transition: background-color 0.04s ease;
+  background-color: rgb(65, 206, 58);
+}
+
+button.error {
+  transition: background-color 0.1s ease;
+  background-color: rgb(221, 47, 47);
+  transform: scale(1.04) rotate(4deg);
 }
 
 .boards-container {
   display: flex;
-  justify-content: space-between;
-  margin: 0 200px;
+  justify-content: space-evenly;
 }
 
 .board-and-shipyard-container {
@@ -65,7 +105,7 @@ h1 {
       justify-content: center;
       align-items: center;
 
-      background-color: rgba(142, 142, 142, 0.128);
+      background-color: rgba(142, 142, 142, 0.108);
 
       button {
         display: none;
@@ -84,13 +124,36 @@ h1 {
       justify-content: center;
       align-items: center;
 
-      background-color: rgba(170, 170, 170, 0.235);
+      background-color: rgba(170, 170, 170, 0.115);
 
       button {
         display: none;
       }
     }
   }
+}
+
+.opponent-side {
+  position: relative;
+}
+
+.play-again-button {
+  position: absolute;
+  z-index: 2;
+  top: calc(52px + 503px / 2);
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  &.hidden {
+    display: none;
+  }
+  &.shown {
+    display: block;
+  }
+}
+
+.play-again-button:hover {
+  transform: translate(-50%, -50%) scale(1.04);
 }
 
 .board {
@@ -120,7 +183,7 @@ h1 {
 }
 
 .missed-square {
-  background-color: grey;
+  background-color: rgb(184, 184, 184);
 }
 
 .hit-square {
@@ -278,8 +341,12 @@ h1 {
   gap: 50px;
 }
 
-.allied-ship {
+.shipyard-square.allied-ship {
   background-color: lightblue;
+}
+
+.square.allied-ship {
+  background-color: rgb(151, 76, 156);
 }
 
 .dragging .allied-ship {
