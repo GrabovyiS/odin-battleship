@@ -95,6 +95,9 @@ const ShipyardShip = (ship, direction, player) => {
       e.target.closest('.board.player-board').appendChild(newShipyardShip);
 
       e.target.closest('.board .shipyard-ship').remove();
+    } else {
+      ship.direction = oldDirection;
+      player.gameboard.placeShip(ship, shipStartingCoords, ship.direction);
     }
   });
 
