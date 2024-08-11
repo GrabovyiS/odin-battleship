@@ -34,7 +34,13 @@ const forEachShipCoord = (
 
       for (let i = 0; i < shipCoords.length; i++) {
         let shipCoord = shipCoords[i];
-        ttbCallback(shipCoord, i);
+        if (i === 0) {
+          ttbCallback(shipCoord, 'first');
+        } else if (i === shipCoords.length - 1) {
+          ttbCallback(shipCoord, 'last');
+        } else {
+          ttbCallback(shipCoord, i);
+        }
       }
     }
   }
